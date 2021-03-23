@@ -1,30 +1,44 @@
 import React from 'react';
-import { Text, TextInput, View, StyleSheet } from 'react-native';
+import {Text, TextInput, View, StyleSheet, Image} from 'react-native';
+import {LoginInputModel} from "../../models/LoginInputModel";
 
-function LoginInput(props) {
+function LoginInput(props: LoginInputModel) {
     return(
         <View style={styles.loginContainer}>
-            
-            <TextInput placeholder={props.placeholder} style={styles.loginInput} />
+            <View style={styles.imageWrapper}>
+                <Image source={props.icon}
+                       style={styles.image} />
+            </View>
+            <TextInput placeholder={props.placeholder}
+                       secureTextEntry={props.placeholder === 'Password'}
+                       style={styles.loginInput} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     loginContainer: {
-        flex: 1,
-        backgroundColor: 'blue',
         display: 'flex',
         justifyContent: 'center',
-        flexDirection: 'row'
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginVertical: 10,
+        borderBottomWidth: 1
     },
     loginInput: {
-        marginBottom: 50,
         width: '80%',
-        alignSelf: 'center',
-        backgroundColor: 'grey',
         height: 50,
-        fontSize: 18
+        fontSize: 18,
+        padding: 5
+    },
+    imageWrapper: {
+        width: 30,
+        height: 30,
+        padding: 5
+    },
+    image: {
+        width: '100%',
+        height: '100%'
     }
 });
 
