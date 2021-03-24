@@ -1,17 +1,24 @@
-import React from 'react';
-import {Text, View, StyleSheet, Button, Linking} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, StyleSheet, Button, Linking, ActivityIndicator} from 'react-native';
 import LoginInput from "./LoginInput";
-import {AppScreens} from "../../navigators/MainStackNavigator";
 import LoginPropsModel from "../../models/LoginPropsModel";
+import {AppScreens} from "../../models/AppScreensEnum";
+
 
 function Login(props: LoginPropsModel) {
-    const { navigation } = props;
+    const {navigation} = props;
 
     const onLoginAttempt = () => {
-        navigation.navigate(AppScreens.Home);
+        setLoading(true);
+        setTimeout(() => {
+            navigation.navigate(AppScreens.Home)
+            setLoading(false);
+        }, 5000);
     };
 
-    return(
+    const [loading, setLoading] = useState(false);
+
+    return (
         <View style={styles.mainContainer}>
             <View style={styles.loginContainer}>
                 <Text style={styles.title}>Login</Text>
@@ -26,16 +33,22 @@ function Login(props: LoginPropsModel) {
                 <View style={styles.actionsContainer}>
                     <View style={styles.submitWrapper}>
                         <Button title='LOGIN'
-                                onPress={onLoginAttempt} />
+                                onPress={onLoginAttempt}/>
                     </View>
                     <View style={styles.signupWrapper}>
                         <Text style={styles.link}
-                              onPress={() => Linking.openURL('https://google.com')} >
+                              onPress={() => Linking.openURL('https://google.com')}>
                             No account? Sign up here!
                         </Text>
                     </View>
                 </View>
             </View>
+            {
+                loading &&
+                <View style={styles.loader}>
+                    <ActivityIndicator size='large'  />
+                </View>
+            }
         </View>
     );
 }
@@ -63,7 +76,6 @@ const styles = StyleSheet.create({
     inputsContainer: {
         display: 'flex',
         justifyContent: 'center',
-
     },
     loginInput: {
         marginVertical: 25,
@@ -82,13 +94,23 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginVertical: 15
     },
-    signupWrapper: {
-    },
+    signupWrapper: {},
     link: {
         color: 'blue'
     },
     rightSide: {
         textAlign: "right"
+    },
+    loader: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        opacity: 0.5
     }
 });
 

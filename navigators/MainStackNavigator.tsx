@@ -2,11 +2,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import Login from "../components/login/Login";
 import Home from "../components/home/Home";
 import React from "react";
-
-export enum AppScreens {
-    Login = 'Login',
-    Home = 'Home'
-}
+import {AppScreens} from "../models/AppScreensEnum";
 
 export type MainStackParamList = {
     Login: undefined,
