@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, TextInput, View, StyleSheet, Image} from 'react-native';
-import {LoginInputModel} from "../../models/LoginInputModel";
+import {LoginInputPropsModel} from "../../models/LoginInputPropsModel";
 
-function LoginInput(props: LoginInputModel) {
+function LoginInput(props: LoginInputPropsModel) {
     return(
         <View style={styles.loginContainer}>
             <View style={styles.imageWrapper}>

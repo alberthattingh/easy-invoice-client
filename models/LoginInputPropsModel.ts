@@ -1,5 +1,5 @@
 
-export interface LoginInputModel {
+export interface LoginInputPropsModel {
     placeholder: string;
     icon: any
 }

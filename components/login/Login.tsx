@@ -1,29 +1,39 @@
 import React from 'react';
-import {Text, TextInput, View, StyleSheet, Button, Linking} from 'react-native';
+import {Text, View, StyleSheet, Button, Linking} from 'react-native';
 import LoginInput from "./LoginInput";
+import {AppScreens} from "../../navigators/MainStackNavigator";
+import LoginPropsModel from "../../models/LoginPropsModel";
 
-function Login() {
+function Login(props: LoginPropsModel) {
+    const { navigation } = props;
+
+    const onLoginAttempt = () => {
+        navigation.navigate(AppScreens.Home);
+    };
+
     return(
-        <View style={styles.loginContainer}>
-            <Text style={styles.title}>Login</Text>
-            <View style={styles.inputsContainer}>
-                <LoginInput placeholder='Email' icon={require('../../images/envelope.png')}/>
-                <LoginInput placeholder='Password' icon={require('../../images/padlock.png')}/>
-                <Text style={[styles.link, styles.rightSide]}
-                      onPress={() => Linking.openURL('https://google.com')}>
-                    Forgot password?
-                </Text>
-            </View>
-            <View style={styles.actionsContainer}>
-                <View style={styles.submitWrapper}>
-                    <Button title='LOGIN'
-                            onPress={() => console.log('test')} />
-                </View>
-                <View style={styles.signupWrapper}>
-                    <Text style={styles.link}
-                          onPress={() => Linking.openURL('https://google.com')} >
-                        No account? Sign up here!
+        <View style={styles.mainContainer}>
+            <View style={styles.loginContainer}>
+                <Text style={styles.title}>Login</Text>
+                <View style={styles.inputsContainer}>
+                    <LoginInput placeholder='Email' icon={require('../../images/envelope.png')}/>
+                    <LoginInput placeholder='Password' icon={require('../../images/padlock.png')}/>
+                    <Text style={[styles.link, styles.rightSide]}
+                          onPress={() => Linking.openURL('https://google.com')}>
+                        Forgot password?
                     </Text>
+                </View>
+                <View style={styles.actionsContainer}>
+                    <View style={styles.submitWrapper}>
+                        <Button title='LOGIN'
+                                onPress={onLoginAttempt} />
+                    </View>
+                    <View style={styles.signupWrapper}>
+                        <Text style={styles.link}
+                              onPress={() => Linking.openURL('https://google.com')} >
+                            No account? Sign up here!
+                        </Text>
+                    </View>
                 </View>
             </View>
         </View>
@@ -31,6 +41,12 @@ function Login() {
 }
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        backgroundColor: '#22aaa1',
+        alignItems: 'stretch',
+        justifyContent: 'center',
+    },
     loginContainer: {
         flex: 1,
         backgroundColor: 'white',
