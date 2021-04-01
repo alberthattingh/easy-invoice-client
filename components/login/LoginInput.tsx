@@ -11,6 +11,7 @@ function LoginInput(props: LoginInputPropsModel) {
             </View>
             <TextInput placeholder={props.placeholder}
                        secureTextEntry={props.placeholder === 'Password'}
+                       onChangeText={(text: string) => props.changeHandler(text)}
                        style={styles.loginInput} />
         </View>
     );

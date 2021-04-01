@@ -3,28 +3,45 @@ import {Text, View, StyleSheet, Button, Linking, ActivityIndicator} from 'react-
 import LoginInput from "./LoginInput";
 import LoginPropsModel from "../../models/LoginPropsModel";
 import {AppScreens} from "../../models/AppScreensEnum";
+import {login} from "../../services/LoginService";
+import UserModel from "../../models/UserModel";
+import {AxiosResponse} from "axios";
 
 
 function Login(props: LoginPropsModel) {
     const {navigation} = props;
 
+    const [loading, setLoading] = useState<boolean>(false);
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
     const onLoginAttempt = () => {
         setLoading(true);
-        setTimeout(() => {
-            navigation.navigate(AppScreens.Home)
-            setLoading(false);
-        }, 5000);
-    };
 
-    const [loading, setLoading] = useState(false);
+        login(email, password).then((response: AxiosResponse<UserModel>) => {
+            return response.data;
+        }).then((user: UserModel) => {
+            console.log(user.token);
+            navigation.navigate(AppScreens.Home)
+        }).catch((error) => {
+            console.log(error.toString());
+        }).finally(() => {
+            setLoading(false);
+        });
+    };
 
     return (
         <View style={styles.mainContainer}>
             <View style={styles.loginContainer}>
                 <Text style={styles.title}>Login</Text>
                 <View style={styles.inputsContainer}>
-                    <LoginInput placeholder='Email' icon={require('../../images/envelope.png')}/>
-                    <LoginInput placeholder='Password' icon={require('../../images/padlock.png')}/>
+                    <LoginInput placeholder='Email'
+                                changeHandler={setEmail}
+                                icon={require('../../images/envelope.png')} />
+                    <LoginInput placeholder='Password'
+                                changeHandler={setPassword}
+                                icon={require('../../images/padlock.png')} />
+
                     <Text style={[styles.link, styles.rightSide]}
                           onPress={() => Linking.openURL('https://google.com')}>
                         Forgot password?
@@ -46,7 +63,7 @@ function Login(props: LoginPropsModel) {
             {
                 loading &&
                 <View style={styles.loader}>
-                    <ActivityIndicator size='large'  />
+                    <ActivityIndicator size='large'/>
                 </View>
             }
         </View>

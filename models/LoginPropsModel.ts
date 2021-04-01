@@ -1,5 +1,6 @@
 import {StackNavigationProp} from "@react-navigation/stack";
-import {AppScreens, MainStackParamList} from "../navigators/MainStackNavigator";
+import {MainStackParamList} from "../navigators/MainStackNavigator";
+import {AppScreens} from "./AppScreensEnum";
 
 type LoginScreenNavProps = StackNavigationProp<MainStackParamList, AppScreens.Login>;
 
