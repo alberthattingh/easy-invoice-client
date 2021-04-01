@@ -6,12 +6,14 @@ import {AppScreens} from "../../models/AppScreensEnum";
 import {login} from "../../services/LoginService";
 import UserModel from "../../models/UserModel";
 import {AxiosResponse} from "axios";
+import SimpleModal from "../popups/SimpleModal";
 
 
 function Login(props: LoginPropsModel) {
     const {navigation} = props;
 
     const [loading, setLoading] = useState<boolean>(false);
+    const [errorModalVisible, setErrorModalVisible] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
@@ -25,6 +27,7 @@ function Login(props: LoginPropsModel) {
             navigation.navigate(AppScreens.Home)
         }).catch((error) => {
             console.log(error.toString());
+            setErrorModalVisible(true);
         }).finally(() => {
             setLoading(false);
         });
@@ -65,6 +68,14 @@ function Login(props: LoginPropsModel) {
                 <View style={styles.loader}>
                     <ActivityIndicator size='large'/>
                 </View>
+            }
+            {
+                errorModalVisible &&
+                    <SimpleModal message='Login failed'
+                                 buttonText='OK'
+                                 modalVisible={errorModalVisible}
+                                 setModalVisible={setErrorModalVisible}
+                    />
             }
         </View>
     );
