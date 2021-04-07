@@ -1,7 +1,8 @@
-import {View} from "react-native";
+import {StyleSheet, View, Text} from "react-native";
 import React, {useState} from "react";
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import {Calendar, CalendarList} from 'react-native-calendars';
 import {formatDate} from "../../services/DateService";
+import Agenda from "./Agenda";
 
 const Home = () => {
     const lessons = [{
@@ -22,10 +23,19 @@ const Home = () => {
     markedDates[selectedDate] = {marked: false, selected: true, selectedColor: 'blue'};
 
     return (
-        <View>
+        <View style={styles.mainContainer}>
             <Calendar markedDates={markedDates} />
+            <Agenda date={selectedDate}
+                    lessons={scheduledLessons}
+            />
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        padding: 5
+    }
+});
 
 export default Home;
