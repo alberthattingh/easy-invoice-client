@@ -1,11 +1,12 @@
 import {StyleSheet, View, Text} from "react-native";
 import React, {useState} from "react";
 import {Calendar, CalendarList} from 'react-native-calendars';
-import {formatDate} from "../../services/DateService";
+import {getSimpleDate} from "../../services/DateService";
 import Agenda from "./Agenda";
+import LessonModel from "../../models/LessonModel";
 
 const Home = () => {
-    const lessons = [{
+    const lessons: LessonModel[] = [{
         date: '2021-03-05',
         student: 'James McDonald'
     }, {
@@ -14,7 +15,7 @@ const Home = () => {
     }];
 
     const [scheduledLessons, setScheduledLessons] = useState(lessons);
-    const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
+    const [selectedDate, setSelectedDate] = useState(getSimpleDate(new Date()));
 
     const markedDates: Record<string, any> = { };
     scheduledLessons.forEach((value => {
@@ -24,8 +25,9 @@ const Home = () => {
 
     return (
         <View style={styles.mainContainer}>
-            <Calendar markedDates={markedDates} />
-            <Agenda date={selectedDate}
+            <Calendar style={styles.calendar} markedDates={markedDates} />
+            <Agenda style={styles.agenda}
+                    date={selectedDate}
                     lessons={scheduledLessons}
             />
         </View>
@@ -35,6 +37,12 @@ const Home = () => {
 const styles = StyleSheet.create({
     mainContainer: {
         padding: 5
+    },
+    calendar: {
+        marginBottom: 5
+    },
+    agenda: {
+
     }
 });
 

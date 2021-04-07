@@ -1,5 +1,5 @@
 
-export function formatDate(date: Date) {
+export function getSimpleDate(date: Date) {
     let d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -11,4 +11,8 @@ export function formatDate(date: Date) {
         day = '0' + day;
 
     return [year, month, day].join('-');
+}
+
+export function getDateWithWeekday(date: Date) {
+
 }

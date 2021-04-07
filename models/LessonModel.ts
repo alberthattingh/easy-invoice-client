@@ -1,5 +1,5 @@
 
 export default interface LessonModel {
-    date: Date,
-
+    date: string,
+    student: string
 }
