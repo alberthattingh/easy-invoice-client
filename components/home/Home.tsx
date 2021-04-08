@@ -16,6 +16,8 @@ function Home() {
     const [selectedDate, setSelectedDate] = useState<string>(getSimpleDate(new Date()));
     const [addLessonMode, setAddLessonMode] = useState<boolean>(false);
 
+    const markedDates: Record<string, any> = {};
+
     useEffect(() => {
         getLessons()
             .then(response => response.data)
@@ -28,7 +30,7 @@ function Home() {
             })
             .then((response) => response.data)
             .then(students => {
-                console.log("Updating students in state...");
+                console.log("Updating students in state..");
                 setStudents(students);
             })
             .catch(error => {
@@ -36,15 +38,14 @@ function Home() {
             });
     }, []);
 
-    const addNewLesson = () => {
-
-    };
-
-    const markedDates: Record<string, any> = {};
     scheduledLessons.forEach((value => {
-        markedDates[value.lessonDate.toString()] = {marked: true}
+        markedDates[getSimpleDate(new Date(value.lessonDate))] = {marked: true}
     }));
     markedDates[selectedDate] = {marked: false, selected: true, selectedColor: 'blue'};
+
+    const lessonsForSelectedDate = scheduledLessons.filter((lesson) => {
+        return getSimpleDate(new Date(lesson.lessonDate)) === selectedDate;
+    });
 
     return (
         <View style={styles.mainContainer}>
@@ -56,10 +57,12 @@ function Home() {
                     </View>
                 </TouchableOpacity>
             </View>
-            <Calendar style={styles.calendar} markedDates={markedDates}/>
+            <Calendar style={styles.calendar}
+                      onDayPress={(day) => setSelectedDate(day.dateString)}
+                      markedDates={markedDates}/>
             <Agenda style={styles.agenda}
                     date={selectedDate}
-                    lessons={scheduledLessons}
+                    lessons={lessonsForSelectedDate}
             />
             <NewLessonModal visible={addLessonMode}
                             setVisible={setAddLessonMode}

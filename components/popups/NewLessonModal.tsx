@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {ActivityIndicator, Button, Modal, Platform, StyleSheet, Text, TextInput, View} from "react-native";
+import {ActivityIndicator, Button, Modal, Platform, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import NewLessonModalPropsModel from "../../models/NewLessonModalPropsModel";
 import ModalSelector, {IOption} from "react-native-modal-selector";
 import StudentModel from "../../models/StudentModel";
@@ -21,12 +21,10 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     const [selectedStudent, setSelectedStudent] = useState<StudentModel>();
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectedTime, setSelectedTime] = useState<Date>(new Date());
-    const [duration, setDuration] = useState<number>(0);
+    const [duration, setDuration] = useState<number>(1);
 
     const handleStudentSelect = (option: IOption) => {
-        console.log(`${option.label} was selected with key ${option.key}`);
         const student = students.find((s) => s.studentId === option.key);
-
         setSelectedStudent(student);
     };
 
@@ -53,7 +51,6 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     };
 
     const onSave = () => {
-        // API call
         if (selectedStudent === undefined || selectedStudent === null) {
             return; // TODO: Show error message
         }
@@ -84,7 +81,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     };
 
     return (
-        <Modal animationType={'slide'} presentationStyle={"formSheet"} visible={visible}>
+        <Modal style={styles.modal} animationType={'slide'} presentationStyle={"formSheet"} visible={visible}>
             <View style={styles.actionBar}>
                 <Button title={'Cancel'} onPress={onCancel}/>
                 <Button title={'Save'} onPress={onSave}/>
@@ -114,6 +111,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
                     <Text>Duration</Text>
                     <View style={styles.durationInputGroup}>
                         <TextInput style={styles.durationInput}
+                                   defaultValue={'1'}
                                    keyboardType={'numeric'}
                                    onChangeText={(text) => handleDurationChange(text)}/>
                         <Text style={styles.measure}>hours</Text>
@@ -131,6 +129,9 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
 }
 
 const styles = StyleSheet.create({
+    modal: {
+
+    },
     actionBar: {
         padding: 10,
         flexDirection: 'row',
@@ -138,10 +139,11 @@ const styles = StyleSheet.create({
     },
     mainForm: {
         marginTop: 25,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        justifyContent: "space-evenly"
     },
     formGroup: {
-        marginBottom: 20
+        marginBottom: 20,
     },
     durationInputGroup: {
         flexDirection: 'row',
@@ -149,7 +151,8 @@ const styles = StyleSheet.create({
     },
     durationInput: {
         borderBottomWidth: 1,
-        flex: 3
+        flex: 3,
+        textAlign: "center"
     },
     measure: {
         flex: 1,
