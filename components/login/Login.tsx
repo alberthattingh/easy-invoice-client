@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Button, Linking, ActivityIndicator} from 'react-
 import LoginInput from "./LoginInput";
 import LoginPropsModel from "../../models/LoginPropsModel";
 import {AppScreens} from "../../models/AppScreensEnum";
-import {login} from "../../services/LoginService";
+import {login, setToken} from "../../services/LoginService";
 import UserModel from "../../models/UserModel";
 import {AxiosResponse} from "axios";
 import SimpleModal from "../popups/SimpleModal";
@@ -23,7 +23,8 @@ function Login(props: LoginPropsModel) {
         login(email, password).then((response: AxiosResponse<UserModel>) => {
             return response.data;
         }).then((user: UserModel) => {
-            console.log(user.token);
+            return setToken(user.token);
+        }).then(() => {
             navigation.navigate(AppScreens.Home)
         }).catch((error) => {
             console.log(error.toString());
@@ -40,10 +41,10 @@ function Login(props: LoginPropsModel) {
                 <View style={styles.inputsContainer}>
                     <LoginInput placeholder='Email'
                                 changeHandler={setEmail}
-                                icon={require('../../images/envelope.png')} />
+                                icon={require('../../images/envelope.png')}/>
                     <LoginInput placeholder='Password'
                                 changeHandler={setPassword}
-                                icon={require('../../images/padlock.png')} />
+                                icon={require('../../images/padlock.png')}/>
 
                     <Text style={[styles.link, styles.rightSide]}
                           onPress={() => Linking.openURL('https://google.com')}>
@@ -71,11 +72,11 @@ function Login(props: LoginPropsModel) {
             }
             {
                 errorModalVisible &&
-                    <SimpleModal message='Login failed'
-                                 buttonText='OK'
-                                 modalVisible={errorModalVisible}
-                                 setModalVisible={setErrorModalVisible}
-                    />
+                <SimpleModal message='Login failed'
+                             buttonText='OK'
+                             modalVisible={errorModalVisible}
+                             setModalVisible={setErrorModalVisible}
+                />
             }
         </View>
     );

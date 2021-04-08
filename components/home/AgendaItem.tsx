@@ -3,12 +3,28 @@ import {View, StyleSheet, Text} from 'react-native';
 import AgendaItemPropsModel from "../../models/AgendaItemPropsModel";
 
 function AgendaItem(props: AgendaItemPropsModel) {
+    const {time, student} = props;
+
     return (
-        <View style={styles.container}>
-            <View style={styles.time}><Text>{props.time}</Text></View>
-            <View style={styles.description}><Text>{props.student}</Text></View>
+        <View>
+            {
+                student === undefined
+                    ?
+                    <View style={styles.container}>
+                        <Text>Error</Text>
+                    </View>
+                    :
+                    <View style={styles.container}>
+                        <View style={styles.time}>
+                            <Text>{time}</Text>
+                        </View>
+                        <View style={styles.description}>
+                            <Text>{`${student.firstName} ${student.lastName}`}</Text>
+                        </View>
+                    </View>
+            }
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -32,7 +48,8 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 5,
         justifyContent: "center",
-        textAlign: "center"
+        textAlign: "center",
+        alignItems: 'center'
     },
     description: {
         flex: 3,

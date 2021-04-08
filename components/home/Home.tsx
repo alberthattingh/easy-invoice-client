@@ -1,35 +1,69 @@
-import {StyleSheet, View, Text} from "react-native";
-import React, {useState} from "react";
+import {StyleSheet, View, Text, Image, TouchableOpacity, Modal} from "react-native";
+import React, {useEffect, useState} from "react";
 import {Calendar, CalendarList} from 'react-native-calendars';
 import {getSimpleDate} from "../../services/DateService";
 import Agenda from "./Agenda";
 import LessonModel from "../../models/LessonModel";
+import {getLessons} from "../../services/LessonService";
+import NewLessonModal from "../popups/NewLessonModal";
+import {getStudents} from "../../services/StudentService";
+import StudentModel from "../../models/StudentModel";
 
-const Home = () => {
-    const lessons: LessonModel[] = [{
-        date: '2021-03-05',
-        student: 'James McDonald'
-    }, {
-        date: '2021-03-17',
-        student: 'Megan McNair'
-    }];
+function Home() {
+    const [scheduledLessons, setScheduledLessons] = useState<LessonModel[]>([]);
+    const [students, setStudents] = useState<StudentModel[]>([]);
 
-    const [scheduledLessons, setScheduledLessons] = useState(lessons);
-    const [selectedDate, setSelectedDate] = useState(getSimpleDate(new Date()));
+    const [selectedDate, setSelectedDate] = useState<string>(getSimpleDate(new Date()));
+    const [addLessonMode, setAddLessonMode] = useState<boolean>(false);
 
-    const markedDates: Record<string, any> = { };
+    useEffect(() => {
+        getLessons()
+            .then(response => response.data)
+            .then(lessons => {
+                console.log("Updating lessons in state...");
+                setScheduledLessons(lessons);
+            })
+            .then(() => {
+                return getStudents()
+            })
+            .then((response) => response.data)
+            .then(students => {
+                console.log("Updating students in state...");
+                setStudents(students);
+            })
+            .catch(error => {
+                console.log(error.toString());
+            });
+    }, []);
+
+    const addNewLesson = () => {
+
+    };
+
+    const markedDates: Record<string, any> = {};
     scheduledLessons.forEach((value => {
-        markedDates[value.date.toString()] = {marked: true}
+        markedDates[value.lessonDate.toString()] = {marked: true}
     }));
     markedDates[selectedDate] = {marked: false, selected: true, selectedColor: 'blue'};
 
     return (
         <View style={styles.mainContainer}>
-            <Calendar style={styles.calendar} markedDates={markedDates} />
+            <View style={styles.topBar}>
+                <TouchableOpacity onPress={() => setAddLessonMode(true)}>
+                    <View style={styles.buttonWrapper}>
+                        <Image style={styles.image}
+                               source={require('../../images/plus.png')}/>
+                    </View>
+                </TouchableOpacity>
+            </View>
+            <Calendar style={styles.calendar} markedDates={markedDates}/>
             <Agenda style={styles.agenda}
                     date={selectedDate}
                     lessons={scheduledLessons}
             />
+            <NewLessonModal visible={addLessonMode}
+                            setVisible={setAddLessonMode}
+                            students={students}/>
         </View>
     );
 }
@@ -38,12 +72,24 @@ const styles = StyleSheet.create({
     mainContainer: {
         padding: 5
     },
+    topBar: {
+        marginVertical: 10,
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    },
+    buttonWrapper: {
+        marginEnd: 10,
+        width: 30,
+        height: 30
+    },
+    image: {
+        width: '100%',
+        height: '100%'
+    },
     calendar: {
         marginBottom: 5
     },
-    agenda: {
-
-    }
+    agenda: {}
 });
 
 export default Home;

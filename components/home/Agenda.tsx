@@ -4,7 +4,6 @@ import AgendaPropsModel from "../../models/AgendaPropsModel";
 import AgendaItem from "./AgendaItem";
 
 function Agenda(props: AgendaPropsModel) {
-    // <Text style={styles.heading}>Agenda for {props.date}</Text>
     return (
         <View style={[styles.container, props.style]}>
 
@@ -14,7 +13,9 @@ function Agenda(props: AgendaPropsModel) {
                         ?
                         props.lessons.map(
                             (value, index) => {
-                                return <AgendaItem time={'All Day'} student={value.student} key={index}/>
+                                const date = new Date(value.lessonDate);
+                                const time = `${date.getHours()}:${date.getMinutes()}`;
+                                return <AgendaItem time={time} student={value.student} key={index}/>
                             }
                         )
                         :

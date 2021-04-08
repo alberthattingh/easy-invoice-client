@@ -1,5 +1,8 @@
+import StudentModel from "./StudentModel";
 
 export default interface LessonModel {
-    date: string,
-    student: string
+    lessonDate: string,
+    student?: StudentModel,
+    studentId: number,
+    duration: number
 }
