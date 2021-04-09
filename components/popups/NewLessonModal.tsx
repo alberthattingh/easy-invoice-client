@@ -7,6 +7,7 @@ import RNDateTimePicker from "@react-native-community/datetimepicker";
 import {combineDateAndTime} from "../../services/DateService";
 import LessonModel from "../../models/LessonModel";
 import {addNewLesson} from "../../services/LessonService";
+import {login} from "../../services/LoginService";
 
 function NewLessonModal(props: NewLessonModalPropsModel) {
     const {visible, setVisible, students, newLessonCallback} = props;
@@ -26,6 +27,9 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     const handleStudentSelect = (option: IOption) => {
         const student = students.find((s) => s.studentId === option.key);
         setSelectedStudent(student);
+        console.log(student);
+        console.log(selectedStudent);
+        setTimeout(() => console.log(selectedStudent), 5000);
     };
 
     const handleDateSelection = (date: Date | undefined) => {
@@ -47,6 +51,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     };
 
     const onCancel = () => {
+        setSelectedStudent(undefined);
         setVisible(false);
     };
 
@@ -93,6 +98,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
                     <Text>Student</Text>
                     <ModalSelector data={studentData}
                                    initValue={'Select a student'}
+                                   selectedKey={selectedStudent === undefined ? '' : selectedStudent.studentId}
                                    onChange={(option) => handleStudentSelect(option)}/>
                 </View>
                 <View style={styles.formGroup}>
@@ -131,9 +137,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
 }
 
 const styles = StyleSheet.create({
-    modal: {
-
-    },
+    modal: {},
     actionBar: {
         padding: 10,
         flexDirection: 'row',
