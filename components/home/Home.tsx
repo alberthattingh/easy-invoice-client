@@ -47,6 +47,10 @@ function Home() {
         return getSimpleDate(new Date(lesson.lessonDate)) === selectedDate;
     });
 
+    const onAddNewLesson = (lesson: LessonModel) => {
+        setScheduledLessons([...scheduledLessons, lesson]);
+    };
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.topBar}>
@@ -66,6 +70,7 @@ function Home() {
             />
             <NewLessonModal visible={addLessonMode}
                             setVisible={setAddLessonMode}
+                            newLessonCallback={onAddNewLesson}
                             students={students}/>
         </View>
     );

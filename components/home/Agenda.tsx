@@ -2,6 +2,7 @@ import {Text, View, StyleSheet, ScrollView} from "react-native";
 import React from "react";
 import AgendaPropsModel from "../../models/AgendaPropsModel";
 import AgendaItem from "./AgendaItem";
+import {getSimpleTime} from "../../services/DateService";
 
 function Agenda(props: AgendaPropsModel) {
     return (
@@ -14,7 +15,7 @@ function Agenda(props: AgendaPropsModel) {
                         props.lessons.map(
                             (value, index) => {
                                 const date = new Date(value.lessonDate);
-                                const time = `${date.getHours()}:${date.getMinutes()}`;
+                                const time = getSimpleTime(date);
                                 return <AgendaItem time={time} student={value.student} key={index}/>
                             }
                         )

@@ -9,7 +9,7 @@ import LessonModel from "../../models/LessonModel";
 import {addNewLesson} from "../../services/LessonService";
 
 function NewLessonModal(props: NewLessonModalPropsModel) {
-    const {visible, setVisible, students} = props;
+    const {visible, setVisible, students, newLessonCallback} = props;
     const studentData = students.map(s => {
         return {
             key: s.studentId,
@@ -65,11 +65,13 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
             studentId: selectedStudent.studentId,
             duration: duration
         };
+        console.log(newLesson);
 
         addNewLesson(newLesson)
             .then((response) => response.data)
             .then(lesson => {
                 console.log(lesson);
+                newLessonCallback(lesson);
             })
             .catch(error => {
                 console.log(error);
