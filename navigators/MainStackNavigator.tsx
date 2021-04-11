@@ -1,8 +1,8 @@
 import {createStackNavigator} from "@react-navigation/stack";
 import Login from "../components/login/Login";
-import Home from "../components/home/Home";
 import React from "react";
 import {AppScreens} from "../models/AppScreensEnum";
+import PrimaryTabNavigator from "./PrimaryTabNavigator";
 
 export type MainStackParamList = {
     Login: undefined,
@@ -15,7 +15,7 @@ const MainFlowNavigator = () => {
     return (
         <MainStack.Navigator headerMode='none'>
             <MainStack.Screen name={AppScreens.Login} component={Login} />
-            <MainStack.Screen name={AppScreens.Home} component={Home} />
+            <MainStack.Screen name={AppScreens.Home} component={PrimaryTabNavigator} />
         </MainStack.Navigator>
     )
 };

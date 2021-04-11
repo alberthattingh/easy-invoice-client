@@ -7,6 +7,7 @@ import {login, setToken} from "../../services/LoginService";
 import UserModel from "../../models/UserModel";
 import {AxiosResponse} from "axios";
 import SimpleModal from "../popups/SimpleModal";
+import StatusBarBackground from "../status-bar-background/StatusBarBackground";
 
 
 function Login(props: LoginPropsModel) {
@@ -36,6 +37,7 @@ function Login(props: LoginPropsModel) {
 
     return (
         <View style={styles.mainContainer}>
+            <StatusBarBackground style={{backgroundColor: '#22aaa1'}} />
             <View style={styles.loginContainer}>
                 <Text style={styles.title}>Login</Text>
                 <View style={styles.inputsContainer}>
