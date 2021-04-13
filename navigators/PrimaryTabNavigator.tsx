@@ -8,7 +8,12 @@ const Tabs = createBottomTabNavigator();
 
 export default function PrimaryTabNavigator() {
     return (
-        <Tabs.Navigator>
+        <Tabs.Navigator tabBarOptions={{
+            tabStyle: {
+                justifyContent: 'center'
+            },
+            iconStyle: false
+        }} >
             <Tabs.Screen name={'Home'}
                          component={Home}
                          options={{title: 'Home'}} />

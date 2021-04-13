@@ -8,6 +8,7 @@ import {getLessons} from "../../services/LessonService";
 import NewLessonModal from "../popups/NewLessonModal";
 import {getStudents} from "../../services/StudentService";
 import StudentModel from "../../models/StudentModel";
+import StatusBarBackground from "../status-bar-background/StatusBarBackground";
 
 function Home() {
     const [scheduledLessons, setScheduledLessons] = useState<LessonModel[]>([]);
@@ -53,6 +54,7 @@ function Home() {
 
     return (
         <View style={styles.mainContainer}>
+            <StatusBarBackground barStyle={'dark-content'} style={{backgroundColor: 'transparent'}} />
             <View style={styles.topBar}>
                 <TouchableOpacity onPress={() => setAddLessonMode(true)}>
                     <View style={styles.buttonWrapper}>
@@ -97,7 +99,9 @@ const styles = StyleSheet.create({
     calendar: {
         marginBottom: 5
     },
-    agenda: {}
+    agenda: {
+
+    }
 });
 
 export default Home;

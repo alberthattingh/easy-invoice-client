@@ -8,7 +8,7 @@ function Agenda(props: AgendaPropsModel) {
     return (
         <View style={[styles.container, props.style]}>
 
-            <ScrollView>
+            <ScrollView style={styles.list}>
                 {
                     props.lessons.length > 0
                         ?
@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         height: '100%'
+    },
+    list: {
+        padding: 10
     },
     heading: {
         marginBottom: 10,

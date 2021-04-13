@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Platform} from 'react-native';
+import {View, Text, StyleSheet, Platform, StatusBar} from 'react-native';
 import StatusBarPropsModel from "../../models/StatusBarPropsModel";
 
 function StatusBarBackground(props: StatusBarPropsModel) {
     return (
         <View style={[styles.statusBarBackground, props.style || {}]}>
-
+            <StatusBar barStyle={props.barStyle || 'default'} />
         </View>
     );
 } // This part is just so you can change the color of the status bar from the parents by passing it as a prop

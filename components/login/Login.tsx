@@ -92,6 +92,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     loginContainer: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.7,
+        shadowRadius: 10,
+        elevation: 10,
+
         flex: 1,
         backgroundColor: 'white',
         display: 'flex',
