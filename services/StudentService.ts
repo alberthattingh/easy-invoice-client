@@ -14,3 +14,14 @@ export async function getStudents(): Promise<AxiosResponse<StudentModel[]>> {
 
     return axios.get<StudentModel[]>(BASE_URL, config);
 }
+
+export async function addNewStudent(student: StudentModel): Promise<AxiosResponse<StudentModel>> {
+    const token = await getToken();
+    const config: AxiosRequestConfig = {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    };
+
+    return axios.post<StudentModel>(BASE_URL, student, config);
+}

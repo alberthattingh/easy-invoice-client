@@ -13,7 +13,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     const {visible, setVisible, students, newLessonCallback} = props;
     const studentData = students.map(s => {
         return {
-            key: s.studentId,
+            key: s.studentId ?? 0,
             label: `${s.firstName} ${s.lastName}`
         };
     });
@@ -67,7 +67,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
         const datetime = combineDateAndTime(selectedDate, selectedTime);
         const newLesson: LessonModel = {
             lessonDate: datetime,
-            studentId: selectedStudent.studentId,
+            studentId: selectedStudent.studentId ?? -1,
             duration: duration
         };
         console.log(newLesson);
