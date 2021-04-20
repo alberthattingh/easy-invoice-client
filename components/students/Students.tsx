@@ -1,31 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Image, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {getStudents} from "../../services/StudentService";
 import StudentModel from "../../models/StudentModel";
 import StudentList from "./StudentList";
 import SimpleTextCard from "./SimpleTextCard";
 import StatusBarBackground from "../status-bar-background/StatusBarBackground";
 import NewStudentModal from "../popups/NewStudentModal";
+import StudentContext from "../provider/StudentsProvider";
 
 export default function Students() {
-    const [myStudents, setMyStudents] = useState<StudentModel[]>([]);
+    const { myStudents, setMyStudents } = useContext(StudentContext);
+
     const [addStudentMode, setAddStudentMode] = useState<boolean>(false);
 
     const onAddNewStudent = (student: StudentModel) => {
         setMyStudents([...myStudents, student]);
     };
 
-    useEffect(() => {
-        getStudents()
-            .then((response) => response.data)
-            .then((students) => {
-                console.log("Updating students in state..");
-                setMyStudents(students);
-            })
-            .catch(error => {
-                console.log(error.toString());
-            });
-    }, []);
 
     return (
         <View style={styles.mainContainer}>

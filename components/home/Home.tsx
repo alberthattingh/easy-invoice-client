@@ -1,5 +1,5 @@
 import {StyleSheet, View, Text, Image, TouchableOpacity, Modal} from "react-native";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Calendar, CalendarList} from 'react-native-calendars';
 import {getSimpleDate} from "../../services/DateService";
 import Agenda from "./Agenda";
@@ -9,11 +9,13 @@ import NewLessonModal from "../popups/NewLessonModal";
 import {getStudents} from "../../services/StudentService";
 import StudentModel from "../../models/StudentModel";
 import StatusBarBackground from "../status-bar-background/StatusBarBackground";
+import StudentsContextModel from "../../models/StudentsContextModel";
+import StudentContext from "../provider/StudentsProvider";
 
 function Home() {
-    const [scheduledLessons, setScheduledLessons] = useState<LessonModel[]>([]);
-    const [students, setStudents] = useState<StudentModel[]>([]);
+    const { myStudents, setMyStudents } = useContext(StudentContext);
 
+    const [scheduledLessons, setScheduledLessons] = useState<LessonModel[]>([]);
     const [selectedDate, setSelectedDate] = useState<string>(getSimpleDate(new Date()));
     const [addLessonMode, setAddLessonMode] = useState<boolean>(false);
 
@@ -25,14 +27,6 @@ function Home() {
             .then(lessons => {
                 console.log("Updating lessons in state...");
                 setScheduledLessons(lessons);
-            })
-            .then(() => {
-                return getStudents()
-            })
-            .then((response) => response.data)
-            .then(students => {
-                console.log("Updating students in state..");
-                setStudents(students);
             })
             .catch(error => {
                 console.log(error.toString());
@@ -73,7 +67,7 @@ function Home() {
             <NewLessonModal visible={addLessonMode}
                             setVisible={setAddLessonMode}
                             newLessonCallback={onAddNewLesson}
-                            students={students}/>
+                            students={myStudents}/>
         </View>
     );
 }
