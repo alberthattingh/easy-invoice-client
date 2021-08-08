@@ -1,6 +1,6 @@
-import StudentModel from "./StudentModel";
+import StudentModel from './StudentModel';
 
 export default interface AgendaItemPropsModel {
-    time: string,
-    student?: StudentModel
+	time: string;
+	student?: StudentModel;
 }

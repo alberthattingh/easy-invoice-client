@@ -1,10 +1,10 @@
-import LessonModel from "./LessonModel";
+import LessonModel from './LessonModel';
 
 export interface InvoiceModel {
-    invoiceId: number,
-    userId: number,
-    startDate: Date,
-    endDate: Date,
-    total: number,
-    lessons: LessonModel[],
+	invoiceId: number;
+	userId: number;
+	startDate: Date;
+	endDate: Date;
+	total: number;
+	lessons: LessonModel[];
 }

@@ -1,8 +1,7 @@
-
 export interface SimpleModalPropsModel {
-    message: string,
-    buttonText: string,
+	message: string;
+	buttonText: string;
 
-    modalVisible: boolean,
-    setModalVisible: (value: boolean) => void
+	modalVisible: boolean;
+	setModalVisible: (value: boolean) => void;
 }
