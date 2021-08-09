@@ -114,11 +114,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
 					<ModalSelector
 						data={studentData}
 						initValue={'Select a student'}
-						selectedKey={
-							selectedStudent === undefined
-								? ''
-								: selectedStudent.studentId
-						}
+						selectedKey={selectedStudent === undefined ? '' : selectedStudent.studentId}
 						onChange={(option) => handleStudentSelect(option)}
 					/>
 				</View>

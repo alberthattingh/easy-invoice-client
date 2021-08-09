@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-	Text,
-	View,
-	StyleSheet,
-	Button,
-	Linking,
-	ActivityIndicator,
-} from 'react-native';
+import { Text, View, StyleSheet, Button, Linking, ActivityIndicator } from 'react-native';
 import LoginInput from './LoginInput';
 import LoginPropsModel from '../../models/LoginPropsModel';
 import { AppScreens } from '../../models/AppScreensEnum';
@@ -77,9 +70,7 @@ function Login(props: LoginPropsModel) {
 					<View style={styles.signupWrapper}>
 						<Text
 							style={styles.link}
-							onPress={() =>
-								Linking.openURL('https://google.com')
-							}
+							onPress={() => Linking.openURL('https://google.com')}
 						>
 							No account? Sign up here!
 						</Text>

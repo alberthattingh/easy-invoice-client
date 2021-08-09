@@ -125,7 +125,7 @@ export default function NewStudentModal(props: NewStudentModalPropsModel) {
 							placeholder={'Hourly Fee'}
 						/>
 					</View>
-					<View style={styles.empty}></View>
+					<View style={styles.empty} />
 				</View>
 			</KeyboardAvoidingView>
 			{loading && (

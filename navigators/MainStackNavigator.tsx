@@ -15,10 +15,7 @@ const MainFlowNavigator = () => {
 	return (
 		<MainStack.Navigator headerMode="none">
 			<MainStack.Screen name={AppScreens.Login} component={Login} />
-			<MainStack.Screen
-				name={AppScreens.Home}
-				component={PrimaryTabNavigator}
-			/>
+			<MainStack.Screen name={AppScreens.Home} component={PrimaryTabNavigator} />
 		</MainStack.Navigator>
 	);
 };

@@ -2,9 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { RecentInvoiceItemPropsModel } from '../../models/RecentInvoiceItemPropsModel';
 
-export default function RecentInvoiceListItem(
-	props: RecentInvoiceItemPropsModel
-) {
+export default function RecentInvoiceListItem(props: RecentInvoiceItemPropsModel) {
 	const { invoice } = props;
 
 	return (

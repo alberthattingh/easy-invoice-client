@@ -12,19 +12,11 @@ function Agenda(props: AgendaPropsModel) {
 					props.lessons.map((value, index) => {
 						const date = new Date(value.lessonDate);
 						const time = getSimpleTime(date);
-						return (
-							<AgendaItem
-								time={time}
-								student={value.student}
-								key={index}
-							/>
-						);
+						return <AgendaItem time={time} student={value.student} key={index} />;
 					})
 				) : (
 					<View style={styles.emptyAgenda}>
-						<Text>
-							Put your feet up! There's nothing on your schedule.
-						</Text>
+						<Text>Put your feet up! There's nothing on your schedule.</Text>
 					</View>
 				)}
 			</ScrollView>

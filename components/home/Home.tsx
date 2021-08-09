@@ -1,11 +1,4 @@
-import {
-	StyleSheet,
-	View,
-	Text,
-	Image,
-	TouchableOpacity,
-	Modal,
-} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { Calendar, CalendarList } from 'react-native-calendars';
 import { getSimpleDate } from '../../services/DateService';
@@ -20,9 +13,7 @@ function Home() {
 	const { myStudents, setMyStudents } = useContext(StudentContext);
 
 	const [scheduledLessons, setScheduledLessons] = useState<LessonModel[]>([]);
-	const [selectedDate, setSelectedDate] = useState<string>(
-		getSimpleDate(new Date())
-	);
+	const [selectedDate, setSelectedDate] = useState<string>(getSimpleDate(new Date()));
 	const [addLessonMode, setAddLessonMode] = useState<boolean>(false);
 
 	const markedDates: Record<string, any> = {};
@@ -67,10 +58,7 @@ function Home() {
 			<View style={styles.topBar}>
 				<TouchableOpacity onPress={() => setAddLessonMode(true)}>
 					<View style={styles.buttonWrapper}>
-						<Image
-							style={styles.image}
-							source={require('../../images/plus.png')}
-						/>
+						<Image style={styles.image} source={require('../../images/plus.png')} />
 					</View>
 				</TouchableOpacity>
 			</View>
@@ -79,11 +67,7 @@ function Home() {
 				onDayPress={(day) => setSelectedDate(day.dateString)}
 				markedDates={markedDates}
 			/>
-			<Agenda
-				style={styles.agenda}
-				date={selectedDate}
-				lessons={lessonsForSelectedDate}
-			/>
+			<Agenda style={styles.agenda} date={selectedDate} lessons={lessonsForSelectedDate} />
 			<NewLessonModal
 				visible={addLessonMode}
 				setVisible={setAddLessonMode}

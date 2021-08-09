@@ -18,11 +18,7 @@ export default function PrimaryTabNavigator() {
 					iconStyle: false,
 				}}
 			>
-				<Tabs.Screen
-					name={'Home'}
-					component={Home}
-					options={{ title: 'Home' }}
-				/>
+				<Tabs.Screen name={'Home'} component={Home} options={{ title: 'Home' }} />
 				<Tabs.Screen
 					name={'Students'}
 					component={Students}

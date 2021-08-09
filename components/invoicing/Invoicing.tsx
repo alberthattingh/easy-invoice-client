@@ -3,12 +3,14 @@ import StudentContext from '../provider/StudentsProvider';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import StatusBarBackground from '../status-bar-background/StatusBarBackground';
 import RecentInvoices from './RecentInvoicesList';
-import { InvoiceModel } from '../../models/InvoiceModel';
 import { getAllInvoices } from '../../services/InvoiceService';
+import { InvoiceModel } from '../../models/InvoiceModels';
+import CreateInvoiceModal from '../popups/CreateInvoiceModal';
 
 export default function Invoicing() {
 	const { myStudents, setMyStudents } = useContext(StudentContext);
 	const [invoices, setInvoices] = useState<InvoiceModel[]>([]);
+	const [createInvoiceMode, setCreateInvoiceMode] = useState<boolean>(false);
 
 	useEffect(() => {
 		getAllInvoices()
@@ -27,16 +29,18 @@ export default function Invoicing() {
 				style={{ backgroundColor: 'transparent' }}
 			/>
 			<View style={styles.topBar}>
-				<TouchableOpacity onPress={() => ''}>
+				<TouchableOpacity onPress={() => setCreateInvoiceMode(true)}>
 					<View style={styles.buttonWrapper}>
-						<Image
-							style={styles.image}
-							source={require('../../images/plus.png')}
-						/>
+						<Image style={styles.image} source={require('../../images/plus.png')} />
 					</View>
 				</TouchableOpacity>
 			</View>
 			<RecentInvoices invoices={invoices} />
+			<CreateInvoiceModal
+				visible={createInvoiceMode}
+				setVisible={setCreateInvoiceMode}
+				myStudents={myStudents}
+			/>
 		</View>
 	);
 }

@@ -1,12 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-	Image,
-	StatusBar,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import StudentModel from '../../models/StudentModel';
 import StudentList from './StudentList';
 import SimpleTextCard from './SimpleTextCard';
@@ -32,10 +25,7 @@ export default function Students() {
 			<View style={styles.topBar}>
 				<TouchableOpacity onPress={() => setAddStudentMode(true)}>
 					<View style={styles.buttonWrapper}>
-						<Image
-							style={styles.image}
-							source={require('../../images/plus.png')}
-						/>
+						<Image style={styles.image} source={require('../../images/plus.png')} />
 					</View>
 				</TouchableOpacity>
 			</View>

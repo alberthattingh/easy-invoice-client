@@ -22,9 +22,7 @@ export default function (props: SimpleModalPropsModel) {
 							style={[styles.button, styles.buttonClose]}
 							onPress={() => setModalVisible(!modalVisible)}
 						>
-							<Text style={styles.textStyle}>
-								{props.buttonText}
-							</Text>
+							<Text style={styles.textStyle}>{props.buttonText}</Text>
 						</Pressable>
 					</View>
 				</View>

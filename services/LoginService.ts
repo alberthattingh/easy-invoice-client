@@ -4,10 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 
 const BASE_URL = 'https://easy-invoice-api.herokuapp.com/Users/Auth';
 
-export function login(
-	email: string,
-	password: string
-): Promise<AxiosResponse<UserModel>> {
+export function login(email: string, password: string): Promise<AxiosResponse<UserModel>> {
 	return axios.post<UserModel>(BASE_URL, {
 		email: email,
 		password: password,
