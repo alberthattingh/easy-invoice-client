@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StudentContext from '../provider/StudentsProvider';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import StatusBarBackground from '../status-bar-background/StatusBarBackground';
+import StatusBarBackground from '../shared/StatusBarBackground';
 import RecentInvoices from './RecentInvoicesList';
 import { getAllInvoices } from '../../services/InvoiceService';
 import { InvoiceModel } from '../../models/InvoiceModels';
-import CreateInvoiceModal from '../popups/CreateInvoiceModal';
+import NewInvoiceModal from '../popups/NewInvoiceModal';
 
 export default function Invoicing() {
 	const { myStudents, setMyStudents } = useContext(StudentContext);
@@ -36,7 +36,7 @@ export default function Invoicing() {
 				</TouchableOpacity>
 			</View>
 			<RecentInvoices invoices={invoices} />
-			<CreateInvoiceModal
+			<NewInvoiceModal
 				visible={createInvoiceMode}
 				setVisible={setCreateInvoiceMode}
 				myStudents={myStudents}

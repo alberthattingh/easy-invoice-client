@@ -7,7 +7,7 @@ import { login, setToken } from '../../services/LoginService';
 import UserModel from '../../models/UserModel';
 import { AxiosResponse } from 'axios';
 import SimpleModal from '../popups/SimpleModal';
-import StatusBarBackground from '../status-bar-background/StatusBarBackground';
+import StatusBarBackground from '../shared/StatusBarBackground';
 
 function Login(props: LoginPropsModel) {
 	const { navigation } = props;

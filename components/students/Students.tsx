@@ -3,7 +3,7 @@ import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'reac
 import StudentModel from '../../models/StudentModel';
 import StudentList from './StudentList';
 import SimpleTextCard from './SimpleTextCard';
-import StatusBarBackground from '../status-bar-background/StatusBarBackground';
+import StatusBarBackground from '../shared/StatusBarBackground';
 import NewStudentModal from '../popups/NewStudentModal';
 import StudentContext from '../provider/StudentsProvider';
 

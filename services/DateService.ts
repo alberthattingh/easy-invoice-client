@@ -1,3 +1,5 @@
+import { TimeObjectModel } from '../models/TimeObjectModel';
+
 export function getSimpleDate(date: Date): string {
 	let d = new Date(date),
 		month = '' + (d.getMonth() + 1),
@@ -21,9 +23,11 @@ export function getSimpleTime(time: Date): string {
 	return hours + ':' + minutes;
 }
 
-export function combineDateAndTime(date: Date, time: Date): string {
+export function combineDateAndTime(date: Date, time: TimeObjectModel): string {
 	const dateString = getSimpleDate(date);
-	const timeString = getSimpleTime(time) + ':00';
+	const timeString = `${time.hours.toString().padStart(2, '0')}:${time.minutes
+		.toString()
+		.padStart(2, '0')}:00`;
 
 	return dateString + 'T' + timeString;
 }

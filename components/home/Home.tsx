@@ -6,7 +6,7 @@ import Agenda from './Agenda';
 import LessonModel from '../../models/LessonModel';
 import { getLessons } from '../../services/LessonService';
 import NewLessonModal from '../popups/NewLessonModal';
-import StatusBarBackground from '../status-bar-background/StatusBarBackground';
+import StatusBarBackground from '../shared/StatusBarBackground';
 import StudentContext from '../provider/StudentsProvider';
 
 function Home() {

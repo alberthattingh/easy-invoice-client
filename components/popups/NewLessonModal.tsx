@@ -1,23 +1,14 @@
 import React, { useState } from 'react';
-import {
-	ActivityIndicator,
-	Button,
-	Modal,
-	Platform,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TextInput,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Button, Modal, StyleSheet, Text, TextInput, View } from 'react-native';
 import NewLessonModalPropsModel from '../../models/NewLessonModalPropsModel';
 import ModalSelector, { IOption } from 'react-native-modal-selector';
 import StudentModel from '../../models/StudentModel';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { combineDateAndTime } from '../../services/DateService';
 import LessonModel from '../../models/LessonModel';
 import { addNewLesson } from '../../services/LessonService';
-import { login } from '../../services/LoginService';
+import CustomDatePicker from '../shared/CustomDatePicker';
+import CustomTimePicker from '../shared/CustomTimePicker';
+import { TimeObjectModel } from '../../models/TimeObjectModel';
 
 function NewLessonModal(props: NewLessonModalPropsModel) {
 	const { visible, setVisible, students, newLessonCallback } = props;
@@ -31,7 +22,10 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
 
 	const [selectedStudent, setSelectedStudent] = useState<StudentModel>();
 	const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-	const [selectedTime, setSelectedTime] = useState<Date>(new Date());
+	const [selectedTime, setSelectedTime] = useState<TimeObjectModel>({
+		hours: new Date().getHours(),
+		minutes: new Date().getMinutes(),
+	});
 	const [duration, setDuration] = useState<number>(1);
 
 	const handleStudentSelect = (option: IOption) => {
@@ -40,16 +34,6 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
 		console.log(student);
 		console.log(selectedStudent);
 		setTimeout(() => console.log(selectedStudent), 5000);
-	};
-
-	const handleDateSelection = (date: Date | undefined) => {
-		const currentDate = date || selectedDate;
-		setSelectedDate(currentDate);
-	};
-
-	const handleTimeSelection = (time: Date | undefined) => {
-		const currentTime = time || selectedTime;
-		setSelectedTime(currentTime);
 	};
 
 	const handleDurationChange = (text: string) => {
@@ -119,21 +103,17 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
 					/>
 				</View>
 				<View style={styles.formGroup}>
-					<Text>Date</Text>
-					<RNDateTimePicker
-						value={selectedDate}
-						display={'default'}
-						mode={'date'}
-						onChange={(event, date) => handleDateSelection(date)}
+					<CustomDatePicker
+						label="Date"
+						selectedDate={selectedDate}
+						setSelectedDate={setSelectedDate}
 					/>
 				</View>
 				<View style={styles.formGroup}>
-					<Text>Time</Text>
-					<RNDateTimePicker
-						value={selectedTime}
-						display={'default'}
-						mode={'time'}
-						onChange={(event, date) => handleTimeSelection(date)}
+					<CustomTimePicker
+						label="Time"
+						selectedTime={selectedTime}
+						setSelectedTime={setSelectedTime}
 					/>
 				</View>
 				<View style={styles.formGroup}>

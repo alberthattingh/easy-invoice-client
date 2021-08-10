@@ -9,12 +9,12 @@ import {
 	View,
 } from 'react-native';
 import { CreateInvoiceModalPropsModel } from '../../models/InvoiceModels';
-import MultiSelectionBox from '../multi-selection-box/MultiSelectionBox';
+import MultiSelectionBox from '../shared/MultiSelectionBox';
 import { SelectableItem } from '../../models/MultiSelectionBoxPropsModel';
-import CustomDatePicker from '../custom-date-picker/CustomDatePicker';
+import CustomDatePicker from '../shared/CustomDatePicker';
 import { TextInput } from 'react-native-paper';
 
-export default function CreateInvoiceModal(props: CreateInvoiceModalPropsModel) {
+export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
 	const { visible, setVisible, myStudents } = props;
 
 	const [loading, setLoading] = useState<boolean>(false);
