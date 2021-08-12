@@ -15,9 +15,7 @@ export async function getLessons(): Promise<AxiosResponse<LessonModel[]>> {
     return axios.get<LessonModel[]>(BASE_URL, config);
 }
 
-export async function addNewLesson(
-    lessonDetails: LessonModel
-): Promise<AxiosResponse<LessonModel>> {
+export async function addNewLesson(lessonDetails: LessonModel): Promise<AxiosResponse<LessonModel>> {
     const token = await getToken();
     const config: AxiosRequestConfig = {
         headers: {

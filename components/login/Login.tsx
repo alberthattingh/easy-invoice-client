@@ -56,10 +56,7 @@ function Login(props: LoginPropsModel) {
                         icon={require('../../images/padlock.png')}
                     />
 
-                    <Text
-                        style={[styles.link, styles.rightSide]}
-                        onPress={() => Linking.openURL('https://google.com')}
-                    >
+                    <Text style={[styles.link, styles.rightSide]} onPress={() => Linking.openURL('https://google.com')}>
                         Forgot password?
                     </Text>
                 </View>
@@ -68,10 +65,7 @@ function Login(props: LoginPropsModel) {
                         <Button title="LOGIN" onPress={onLoginAttempt} />
                     </View>
                     <View style={styles.signupWrapper}>
-                        <Text
-                            style={styles.link}
-                            onPress={() => Linking.openURL('https://google.com')}
-                        >
+                        <Text style={styles.link} onPress={() => Linking.openURL('https://google.com')}>
                             No account? Sign up here!
                         </Text>
                     </View>

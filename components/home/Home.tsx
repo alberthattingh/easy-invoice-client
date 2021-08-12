@@ -51,10 +51,7 @@ function Home() {
 
     return (
         <View style={styles.mainContainer}>
-            <StatusBarBackground
-                barStyle={'dark-content'}
-                style={{ backgroundColor: 'transparent' }}
-            />
+            <StatusBarBackground barStyle={'dark-content'} style={{ backgroundColor: 'transparent' }} />
             <View style={styles.topBar}>
                 <TouchableOpacity onPress={() => setAddLessonMode(true)}>
                     <View style={styles.buttonWrapper}>

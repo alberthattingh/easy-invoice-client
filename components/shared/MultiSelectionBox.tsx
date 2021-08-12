@@ -1,7 +1,4 @@
-import {
-    MultiSelectionBoxPropsModel,
-    SelectableItem,
-} from '../../models/MultiSelectionBoxPropsModel';
+import { MultiSelectionBoxPropsModel, SelectableItem } from '../../models/MultiSelectionBoxPropsModel';
 import { View } from 'react-native';
 import React, { useState } from 'react';
 import { List, TextInput } from 'react-native-paper';
@@ -48,9 +45,7 @@ export default function MultiSelectionBox(props: MultiSelectionBoxPropsModel) {
                         <List.Item
                             key={selectable.key}
                             title={selectable.label}
-                            left={(props) => (
-                                <List.Icon {...props} icon={checkboxIcon(selectable)} />
-                            )}
+                            left={(props) => <List.Icon {...props} icon={checkboxIcon(selectable)} />}
                             onPress={() => toggleItemSelection(selectable)}
                         />
                     ))}

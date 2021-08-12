@@ -18,10 +18,7 @@ export default function Students() {
 
     return (
         <View style={styles.mainContainer}>
-            <StatusBarBackground
-                barStyle={'dark-content'}
-                style={{ backgroundColor: 'transparent' }}
-            />
+            <StatusBarBackground barStyle={'dark-content'} style={{ backgroundColor: 'transparent' }} />
             <View style={styles.topBar}>
                 <TouchableOpacity onPress={() => setAddStudentMode(true)}>
                     <View style={styles.buttonWrapper}>

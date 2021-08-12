@@ -19,16 +19,8 @@ export default function PrimaryTabNavigator() {
                 }}
             >
                 <Tabs.Screen name={'Home'} component={Home} options={{ title: 'Home' }} />
-                <Tabs.Screen
-                    name={'Students'}
-                    component={Students}
-                    options={{ title: 'Students' }}
-                />
-                <Tabs.Screen
-                    name={'Invoicing'}
-                    component={Invoicing}
-                    options={{ title: 'Invoice' }}
-                />
+                <Tabs.Screen name={'Students'} component={Students} options={{ title: 'Students' }} />
+                <Tabs.Screen name={'Invoicing'} component={Invoicing} options={{ title: 'Invoice' }} />
             </Tabs.Navigator>
         </StudentsProvider>
     );

@@ -24,10 +24,7 @@ export default function Invoicing() {
 
     return (
         <View style={styles.mainContainer}>
-            <StatusBarBackground
-                barStyle={'dark-content'}
-                style={{ backgroundColor: 'transparent' }}
-            />
+            <StatusBarBackground barStyle={'dark-content'} style={{ backgroundColor: 'transparent' }} />
             <View style={styles.topBar}>
                 <TouchableOpacity onPress={() => setCreateInvoiceMode(true)}>
                     <View style={styles.buttonWrapper}>
@@ -36,11 +33,7 @@ export default function Invoicing() {
                 </TouchableOpacity>
             </View>
             <RecentInvoices invoices={invoices} />
-            <NewInvoiceModal
-                visible={createInvoiceMode}
-                setVisible={setCreateInvoiceMode}
-                myStudents={myStudents}
-            />
+            <NewInvoiceModal visible={createInvoiceMode} setVisible={setCreateInvoiceMode} myStudents={myStudents} />
         </View>
     );
 }

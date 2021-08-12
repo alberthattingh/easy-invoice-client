@@ -10,12 +10,7 @@ export default function StudentList(props: StudentListPropsModel) {
         <View style={styles.mainContainer}>
             <ScrollView style={styles.list}>
                 {students.map((value, index) => {
-                    return (
-                        <SimpleTextCard
-                            key={value.studentId}
-                            text={value.firstName + ' ' + value.lastName}
-                        />
-                    );
+                    return <SimpleTextCard key={value.studentId} text={value.firstName + ' ' + value.lastName} />;
                 })}
             </ScrollView>
         </View>

@@ -77,12 +77,7 @@ export default function NewStudentModal(props: NewStudentModalPropsModel) {
     };
 
     return (
-        <Modal
-            style={styles.modal}
-            animationType={'slide'}
-            presentationStyle={'formSheet'}
-            visible={visible}
-        >
+        <Modal style={styles.modal} animationType={'slide'} presentationStyle={'formSheet'} visible={visible}>
             <View style={styles.actionBar}>
                 <Button title={'Cancel'} onPress={onCancel} />
                 <Button title={'Save'} onPress={onSave} />

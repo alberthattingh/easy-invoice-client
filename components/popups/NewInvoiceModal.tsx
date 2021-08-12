@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-    ActivityIndicator,
-    Button,
-    KeyboardAvoidingView,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    View,
-} from 'react-native';
+import { ActivityIndicator, Button, KeyboardAvoidingView, Modal, ScrollView, StyleSheet, View } from 'react-native';
 import { CreateInvoiceModalPropsModel } from '../../models/InvoiceModels';
 import MultiSelectionBox from '../shared/MultiSelectionBox';
 import { SelectableItem } from '../../models/MultiSelectionBoxPropsModel';
@@ -35,12 +27,7 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
     const onSave = () => {};
 
     return (
-        <Modal
-            style={styles.modal}
-            animationType={'slide'}
-            presentationStyle={'formSheet'}
-            visible={visible}
-        >
+        <Modal style={styles.modal} animationType={'slide'} presentationStyle={'formSheet'} visible={visible}>
             <View style={styles.actionBar}>
                 <Button title={'Cancel'} onPress={onCancel} />
                 <Button title={'Generate'} onPress={onSave} />
@@ -64,11 +51,7 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
                             />
                         </View>
                         <View style={styles.formGroup}>
-                            <CustomDatePicker
-                                label="End date"
-                                selectedDate={endDate}
-                                setSelectedDate={setEndDate}
-                            />
+                            <CustomDatePicker label="End date" selectedDate={endDate} setSelectedDate={setEndDate} />
                         </View>
                         <View style={styles.formGroup}>
                             <TextInput mode="outlined" label="Description" />

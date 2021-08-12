@@ -25,9 +25,7 @@ export function getSimpleTime(time: Date): string {
 
 export function combineDateAndTime(date: Date, time: TimeObjectModel): string {
     const dateString = getSimpleDate(date);
-    const timeString = `${time.hours.toString().padStart(2, '0')}:${time.minutes
-        .toString()
-        .padStart(2, '0')}:00`;
+    const timeString = `${time.hours.toString().padStart(2, '0')}:${time.minutes.toString().padStart(2, '0')}:00`;
 
     return dateString + 'T' + timeString;
 }

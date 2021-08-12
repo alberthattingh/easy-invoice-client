@@ -15,9 +15,7 @@ export async function getAllInvoices(): Promise<AxiosResponse<InvoiceModel[]>> {
     return axios.post<InvoiceModel[]>(BASE_URL, {}, config);
 }
 
-export async function createNewInvoice(
-    newInvoice: NewInvoiceDetailsModel
-): Promise<AxiosResponse<InvoiceModel>> {
+export async function createNewInvoice(newInvoice: NewInvoiceDetailsModel): Promise<AxiosResponse<InvoiceModel>> {
     const token = await getToken();
     const config: AxiosRequestConfig = {
         headers: {

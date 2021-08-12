@@ -82,12 +82,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     };
 
     return (
-        <Modal
-            style={styles.modal}
-            animationType={'slide'}
-            presentationStyle={'formSheet'}
-            visible={visible}
-        >
+        <Modal style={styles.modal} animationType={'slide'} presentationStyle={'formSheet'} visible={visible}>
             <View style={styles.actionBar}>
                 <Button title={'Cancel'} onPress={onCancel} />
                 <Button title={'Save'} onPress={onSave} />
@@ -103,18 +98,10 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
                     />
                 </View>
                 <View style={styles.formGroup}>
-                    <CustomDatePicker
-                        label="Date"
-                        selectedDate={selectedDate}
-                        setSelectedDate={setSelectedDate}
-                    />
+                    <CustomDatePicker label="Date" selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
                 </View>
                 <View style={styles.formGroup}>
-                    <CustomTimePicker
-                        label="Time"
-                        selectedTime={selectedTime}
-                        setSelectedTime={setSelectedTime}
-                    />
+                    <CustomTimePicker label="Time" selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
                 </View>
                 <View style={styles.formGroup}>
                     <Text>Duration</Text>
