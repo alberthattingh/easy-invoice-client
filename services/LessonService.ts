@@ -5,25 +5,25 @@ import { getToken } from './LoginService';
 const BASE_URL = 'https://easy-invoice-api.herokuapp.com/Lessons';
 
 export async function getLessons(): Promise<AxiosResponse<LessonModel[]>> {
-	const token = await getToken();
-	const config: AxiosRequestConfig = {
-		headers: {
-			Authorization: 'Bearer ' + token,
-		},
-	};
+    const token = await getToken();
+    const config: AxiosRequestConfig = {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
 
-	return axios.get<LessonModel[]>(BASE_URL, config);
+    return axios.get<LessonModel[]>(BASE_URL, config);
 }
 
 export async function addNewLesson(
-	lessonDetails: LessonModel
+    lessonDetails: LessonModel
 ): Promise<AxiosResponse<LessonModel>> {
-	const token = await getToken();
-	const config: AxiosRequestConfig = {
-		headers: {
-			Authorization: 'Bearer ' + token,
-		},
-	};
+    const token = await getToken();
+    const config: AxiosRequestConfig = {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
 
-	return axios.post<LessonModel>(BASE_URL, lessonDetails, config);
+    return axios.post<LessonModel>(BASE_URL, lessonDetails, config);
 }

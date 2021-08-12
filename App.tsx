@@ -4,20 +4,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import MainFlowNavigator from './navigators/MainStackNavigator';
 
 export default function App() {
-	const theme = {
-		...DefaultTheme,
-		colors: {
-			...DefaultTheme.colors,
-			primary: 'tomato',
-			accent: 'yellow',
-		},
-	};
+    const theme = {
+        ...DefaultTheme,
+        colors: {
+            ...DefaultTheme.colors,
+            primary: 'tomato',
+            accent: 'yellow',
+        },
+    };
 
-	return (
-		<PaperProvider theme={theme}>
-			<NavigationContainer>
-				<MainFlowNavigator />
-			</NavigationContainer>
-		</PaperProvider>
-	);
+    return (
+        <PaperProvider theme={theme}>
+            <NavigationContainer>
+                <MainFlowNavigator />
+            </NavigationContainer>
+        </PaperProvider>
+    );
 }

@@ -1,4 +1,4 @@
 export interface TimeObjectModel {
-	hours: number;
-	minutes: number;
+    hours: number;
+    minutes: number;
 }

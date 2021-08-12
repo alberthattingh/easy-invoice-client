@@ -1,3 +1,3 @@
 export default interface SimpleTextCardPropsModel {
-	text: string;
+    text: string;
 }

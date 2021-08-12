@@ -5,25 +5,25 @@ import { InvoiceModel, NewInvoiceDetailsModel } from '../models/InvoiceModels';
 const BASE_URL = 'https://easy-invoice-api.herokuapp.com/Invoice';
 
 export async function getAllInvoices(): Promise<AxiosResponse<InvoiceModel[]>> {
-	const token = await getToken();
-	const config: AxiosRequestConfig = {
-		headers: {
-			Authorization: 'Bearer ' + token,
-		},
-	};
+    const token = await getToken();
+    const config: AxiosRequestConfig = {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
 
-	return axios.post<InvoiceModel[]>(BASE_URL, {}, config);
+    return axios.post<InvoiceModel[]>(BASE_URL, {}, config);
 }
 
 export async function createNewInvoice(
-	newInvoice: NewInvoiceDetailsModel
+    newInvoice: NewInvoiceDetailsModel
 ): Promise<AxiosResponse<InvoiceModel>> {
-	const token = await getToken();
-	const config: AxiosRequestConfig = {
-		headers: {
-			Authorization: 'Bearer ' + token,
-		},
-	};
+    const token = await getToken();
+    const config: AxiosRequestConfig = {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
 
-	return axios.post<InvoiceModel>(`${BASE_URL}/New`, newInvoice, config);
+    return axios.post<InvoiceModel>(`${BASE_URL}/New`, newInvoice, config);
 }

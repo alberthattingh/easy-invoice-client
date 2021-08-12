@@ -8,28 +8,28 @@ import Invoicing from '../components/invoicing/Invoicing';
 const Tabs = createBottomTabNavigator();
 
 export default function PrimaryTabNavigator() {
-	return (
-		<StudentsProvider>
-			<Tabs.Navigator
-				tabBarOptions={{
-					tabStyle: {
-						justifyContent: 'center',
-					},
-					iconStyle: false,
-				}}
-			>
-				<Tabs.Screen name={'Home'} component={Home} options={{ title: 'Home' }} />
-				<Tabs.Screen
-					name={'Students'}
-					component={Students}
-					options={{ title: 'Students' }}
-				/>
-				<Tabs.Screen
-					name={'Invoicing'}
-					component={Invoicing}
-					options={{ title: 'Invoice' }}
-				/>
-			</Tabs.Navigator>
-		</StudentsProvider>
-	);
+    return (
+        <StudentsProvider>
+            <Tabs.Navigator
+                tabBarOptions={{
+                    tabStyle: {
+                        justifyContent: 'center',
+                    },
+                    iconStyle: false,
+                }}
+            >
+                <Tabs.Screen name={'Home'} component={Home} options={{ title: 'Home' }} />
+                <Tabs.Screen
+                    name={'Students'}
+                    component={Students}
+                    options={{ title: 'Students' }}
+                />
+                <Tabs.Screen
+                    name={'Invoicing'}
+                    component={Invoicing}
+                    options={{ title: 'Invoice' }}
+                />
+            </Tabs.Navigator>
+        </StudentsProvider>
+    );
 }

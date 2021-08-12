@@ -1,5 +1,5 @@
 export interface CustomDatePickerPropsModel {
-	label: string;
-	selectedDate: Date;
-	setSelectedDate: (date: Date) => void;
+    label: string;
+    selectedDate: Date;
+    setSelectedDate: (date: Date) => void;
 }
