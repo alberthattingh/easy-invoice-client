@@ -5,6 +5,9 @@ import MultiSelectionBox from '../shared/MultiSelectionBox';
 import { SelectableItem } from '../../models/MultiSelectionBoxPropsModel';
 import CustomDatePicker from '../shared/CustomDatePicker';
 import { TextInput } from 'react-native-paper';
+import * as Print from 'expo-print';
+import * as Sharing from 'expo-sharing';
+import { Asset, useAssets } from 'expo-asset';
 
 export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
     const { visible, setVisible, myStudents } = props;
@@ -20,11 +23,37 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
         value: student,
     }));
 
+    const createPdf = async (html: string) => {
+        const options: Print.FilePrintOptions = {
+            html,
+        };
+
+        try {
+            const { uri } = await Print.printToFileAsync(options);
+            return uri;
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const onCancel = () => {
         setVisible(false);
     };
 
-    const onSave = () => {};
+    const onSave = async () => {
+        setLoading(true);
+
+        const asset = Asset.fromModule(require('../../assets/templates/InvoiceTemplate1.html'));
+        await asset.downloadAsync(); // Optional, saves file into cache
+        const file = await fetch(asset.uri);
+        const uri = await createPdf((await file.text()) as string);
+
+        setLoading(false);
+
+        if (uri && (await Sharing.isAvailableAsync())) {
+            await Sharing.shareAsync(uri);
+        }
+    };
 
     return (
         <Modal style={styles.modal} animationType={'slide'} presentationStyle={'formSheet'} visible={visible}>
