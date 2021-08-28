@@ -7,7 +7,11 @@ import CustomDatePicker from '../shared/CustomDatePicker';
 import { TextInput } from 'react-native-paper';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
-import { Asset, useAssets } from 'expo-asset';
+import { Asset } from 'expo-asset';
+import { createNewInvoice } from '../../services/InvoiceService';
+import StudentModel from '../../models/StudentModel';
+import HandlebarsService from '../../services/HandlebarsService';
+const Handlebars = require('react-native-handlebars');
 
 export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
     const { visible, setVisible, myStudents } = props;
@@ -16,6 +20,7 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
     const [selectedStudents, setSelectedStudents] = useState<SelectableItem[]>([]);
     const [startDate, setStartDate] = useState<Date>(new Date());
     const [endDate, setEndDate] = useState<Date>(new Date());
+    const [description, setDescription] = useState<string>('');
 
     const selectableStudents = myStudents.map((student) => ({
         label: `${student.firstName} ${student.lastName}`,
@@ -23,7 +28,7 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
         value: student,
     }));
 
-    const createPdf = async (html: string) => {
+    const createPdf = async (html: string, fileName: string) => {
         const options: Print.FilePrintOptions = {
             html,
         };
@@ -41,18 +46,43 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
     };
 
     const onSave = async () => {
+        if (!selectedStudents.length) {
+            return; // TODO: Error message
+        }
         setLoading(true);
 
         const asset = Asset.fromModule(require('../../assets/templates/InvoiceTemplate1.html'));
         await asset.downloadAsync(); // Optional, saves file into cache
         const file = await fetch(asset.uri);
-        const uri = await createPdf((await file.text()) as string);
 
-        setLoading(false);
+        HandlebarsService.registerHelpers();
+        const template = Handlebars.compile((await file.text()) as string);
 
-        if (uri && (await Sharing.isAvailableAsync())) {
-            await Sharing.shareAsync(uri);
-        }
+        createNewInvoice({
+            description,
+            startDate,
+            endDate,
+            studentIds: selectedStudents
+                .filter((item) => !!(item.value as StudentModel).studentId)
+                .map((item) => (item.value as StudentModel).studentId as number),
+        })
+            .then((response) => response.data)
+            .then((invoice) => {
+                const studentNames = invoice.lessons.map((lesson) => lesson.student?.firstName);
+                const fileName = `${studentNames
+                    .filter((name, index) => studentNames.indexOf(name) === index)
+                    .join('&')}_${invoice.createdDate.toString()}`;
+
+                const html = template(invoice);
+                return createPdf(html, fileName);
+            })
+            .then(async (uri) => {
+                if (uri && (await Sharing.isAvailableAsync())) {
+                    await Sharing.shareAsync(uri);
+                }
+            })
+            .catch((error) => console.log(error))
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -83,7 +113,11 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
                             <CustomDatePicker label="End date" selectedDate={endDate} setSelectedDate={setEndDate} />
                         </View>
                         <View style={styles.formGroup}>
-                            <TextInput mode="outlined" label="Description" />
+                            <TextInput
+                                mode="outlined"
+                                label="Description"
+                                onChangeText={(text) => setDescription(text)}
+                            />
                         </View>
                         <View style={styles.empty} />
                     </View>
