@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { RecentInvoiceItemPropsModel } from '../../models/RecentInvoiceItemPropsModel';
+import { Avatar, Card } from 'react-native-paper';
 
 export default function RecentInvoiceListItem(props: RecentInvoiceItemPropsModel) {
     const { invoice } = props;
+    const hasDescription = !!invoice.description;
 
     return (
         <View>
@@ -12,14 +14,15 @@ export default function RecentInvoiceListItem(props: RecentInvoiceItemPropsModel
                     <Text>Error</Text>
                 </View>
             ) : (
-                <View style={styles.container}>
-                    <View style={styles.time}>
-                        <Text>{`R ${invoice.total}`}</Text>
-                    </View>
-                    <View style={styles.description}>
-                        <Text>{`${invoice.endDate}`}</Text>
-                    </View>
-                </View>
+                <Card.Title
+                    title={hasDescription ? invoice.description : `Invoice #${invoice.invoiceNumber ?? '5276'}`}
+                    subtitle={
+                        hasDescription
+                            ? `Invoice #${invoice.invoiceNumber ?? '5276'}`
+                            : `Created on ${new Date(invoice.createdDate).toDateString()}`
+                    }
+                    left={(props) => <Avatar.Icon {...props} icon="receipt" />}
+                />
             )}
         </View>
     );
@@ -41,17 +44,5 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginBottom: 10,
         minHeight: 50,
-    },
-    time: {
-        flex: 1,
-        margin: 5,
-        justifyContent: 'center',
-        textAlign: 'center',
-        alignItems: 'center',
-    },
-    description: {
-        flex: 3,
-        margin: 5,
-        justifyContent: 'center',
     },
 });

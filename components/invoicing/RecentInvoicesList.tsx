@@ -20,8 +20,10 @@ export default function RecentInvoicesList(props: InvoicesListPropsModel) {
 const styles = StyleSheet.create({
     mainContainer: {
         height: '100%',
+        flex: 1,
     },
     list: {
         padding: 10,
+        flex: 1,
     },
 });

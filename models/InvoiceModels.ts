@@ -4,6 +4,8 @@ import UserModel from './UserModel';
 
 export interface InvoiceModel {
     invoiceId: number;
+    invoiceNumber: number;
+    description: string;
     userId: number;
     user: UserModel;
     startDate: Date;
