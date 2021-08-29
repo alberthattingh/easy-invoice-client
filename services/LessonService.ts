@@ -25,3 +25,14 @@ export async function addNewLesson(lessonDetails: LessonModel): Promise<AxiosRes
 
     return axios.post<LessonModel>(BASE_URL, lessonDetails, config);
 }
+
+export async function deleteLesson(lessonId: number): Promise<AxiosResponse> {
+    const token = await getToken();
+    const config: AxiosRequestConfig = {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
+
+    return axios.delete(`${BASE_URL}/${lessonId}`, config);
+}

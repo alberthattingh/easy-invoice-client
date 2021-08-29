@@ -59,12 +59,19 @@ function Home() {
                     </View>
                 </TouchableOpacity>
             </View>
-            <Calendar
-                style={styles.calendar}
-                onDayPress={(day) => setSelectedDate(day.dateString)}
-                markedDates={markedDates}
-            />
-            <Agenda style={styles.agenda} date={selectedDate} lessons={lessonsForSelectedDate} />
+            <View style={styles.content}>
+                <Calendar
+                    style={styles.calendar}
+                    onDayPress={(day) => setSelectedDate(day.dateString)}
+                    markedDates={markedDates}
+                />
+                <Agenda
+                    style={styles.agenda}
+                    date={selectedDate}
+                    lessons={lessonsForSelectedDate}
+                    setLessons={setScheduledLessons}
+                />
+            </View>
             <NewLessonModal
                 visible={addLessonMode}
                 setVisible={setAddLessonMode}
@@ -78,6 +85,7 @@ function Home() {
 const styles = StyleSheet.create({
     mainContainer: {
         padding: 5,
+        flex: 1,
     },
     topBar: {
         marginVertical: 10,
@@ -93,10 +101,16 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
+    content: {
+        flex: 1,
+    },
     calendar: {
         marginBottom: 5,
     },
-    agenda: {},
+    agenda: {
+        paddingBottom: 10,
+        flex: 1,
+    },
 });
 
 export default Home;

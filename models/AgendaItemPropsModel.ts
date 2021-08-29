@@ -1,6 +1,7 @@
-import StudentModel from './StudentModel';
+import LessonModel from './LessonModel';
 
 export default interface AgendaItemPropsModel {
     time: string;
-    student?: StudentModel;
+    lesson: LessonModel;
+    setLessons: (lessons: LessonModel[]) => void;
 }

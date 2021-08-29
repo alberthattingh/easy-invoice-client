@@ -1,25 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, Avatar, Card, IconButton } from 'react-native-paper';
 import AgendaItemPropsModel from '../../models/AgendaItemPropsModel';
+import { deleteLesson, getLessons } from '../../services/LessonService';
 
 function AgendaItem(props: AgendaItemPropsModel) {
-    const { time, student } = props;
+    const { time, lesson, setLessons } = props;
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+    const cancelLesson = () => {
+        setIsDeleting(true);
+        deleteLesson(lesson.lessonId)
+            .then((response) => {
+                if (response.status === 200) {
+                    return getLessons();
+                }
+                throw new Error('Error deleting lesson');
+            })
+            .then((response) => response.data)
+            .then((lessons) => setLessons(lessons))
+            .catch((error) => {
+                console.log(error.toString());
+            });
+    };
 
     return (
         <View>
-            {student === undefined ? (
+            {!lesson ? (
                 <View style={styles.container}>
                     <Text>Error</Text>
                 </View>
             ) : (
-                <View style={styles.container}>
-                    <View style={styles.time}>
-                        <Text>{time}</Text>
-                    </View>
-                    <View style={styles.description}>
-                        <Text>{`${student.firstName} ${student.lastName}`}</Text>
-                    </View>
-                </View>
+                <Card.Title
+                    title={`${lesson.student?.firstName} ${lesson.student?.lastName}`}
+                    subtitle={time}
+                    left={(props) => <Avatar.Icon {...props} icon="notebook" />}
+                    right={(props) =>
+                        isDeleting ? (
+                            <ActivityIndicator animating={true} />
+                        ) : (
+                            <IconButton {...props} icon="trash-can-outline" onPress={() => cancelLesson()} />
+                        )
+                    }
+                />
             )}
         </View>
     );

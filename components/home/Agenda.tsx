@@ -12,7 +12,7 @@ function Agenda(props: AgendaPropsModel) {
                     props.lessons.map((value, index) => {
                         const date = new Date(value.lessonDate);
                         const time = getSimpleTime(date);
-                        return <AgendaItem time={time} student={value.student} key={index} />;
+                        return <AgendaItem time={time} lesson={value} key={index} setLessons={props.setLessons} />;
                     })
                 ) : (
                     <View style={styles.emptyAgenda}>
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     },
     list: {
         padding: 10,
+        height: '100%',
     },
     heading: {
         marginBottom: 10,
