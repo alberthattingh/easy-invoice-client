@@ -6,6 +6,7 @@ import RecentInvoices from './RecentInvoicesList';
 import { getAllInvoices } from '../../services/InvoiceService';
 import { InvoiceModel } from '../../models/InvoiceModels';
 import NewInvoiceModal from '../popups/NewInvoiceModal';
+import { IconButton } from 'react-native-paper';
 
 export default function Invoicing() {
     const { myStudents, setMyStudents } = useContext(StudentContext);
@@ -26,11 +27,7 @@ export default function Invoicing() {
         <View style={styles.mainContainer}>
             <StatusBarBackground barStyle={'dark-content'} style={{ backgroundColor: 'transparent' }} />
             <View style={styles.topBar}>
-                <TouchableOpacity onPress={() => setCreateInvoiceMode(true)}>
-                    <View style={styles.buttonWrapper}>
-                        <Image style={styles.image} source={require('../../images/plus.png')} />
-                    </View>
-                </TouchableOpacity>
+                <IconButton icon="plus" size={40} style={styles.button} onPress={() => setCreateInvoiceMode(true)} />
             </View>
             <RecentInvoices invoices={invoices} />
             <NewInvoiceModal visible={createInvoiceMode} setVisible={setCreateInvoiceMode} myStudents={myStudents} />
@@ -44,14 +41,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     topBar: {
-        marginVertical: 10,
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
-    buttonWrapper: {
-        marginEnd: 10,
-        width: 30,
-        height: 30,
+    button: {
+        marginVertical: 0,
     },
     image: {
         width: '100%',

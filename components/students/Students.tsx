@@ -6,6 +6,7 @@ import SimpleTextCard from './SimpleTextCard';
 import StatusBarBackground from '../shared/StatusBarBackground';
 import NewStudentModal from '../popups/NewStudentModal';
 import StudentContext from '../provider/StudentsProvider';
+import { IconButton } from 'react-native-paper';
 
 export default function Students() {
     const { myStudents, setMyStudents } = useContext(StudentContext);
@@ -20,13 +21,8 @@ export default function Students() {
         <View style={styles.mainContainer}>
             <StatusBarBackground barStyle={'dark-content'} style={{ backgroundColor: 'transparent' }} />
             <View style={styles.topBar}>
-                <TouchableOpacity onPress={() => setAddStudentMode(true)}>
-                    <View style={styles.buttonWrapper}>
-                        <Image style={styles.image} source={require('../../images/plus.png')} />
-                    </View>
-                </TouchableOpacity>
+                <IconButton icon="plus" size={40} style={styles.button} onPress={() => setAddStudentMode(true)} />
             </View>
-            <Text></Text>
             {myStudents.length > 0 ? (
                 <StudentList students={myStudents} />
             ) : (
@@ -47,14 +43,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     topBar: {
-        marginVertical: 10,
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
-    buttonWrapper: {
-        marginEnd: 10,
-        width: 30,
-        height: 30,
+    button: {
+        marginVertical: 0,
     },
     image: {
         width: '100%',

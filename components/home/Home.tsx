@@ -8,6 +8,7 @@ import { getLessons } from '../../services/LessonService';
 import NewLessonModal from '../popups/NewLessonModal';
 import StatusBarBackground from '../shared/StatusBarBackground';
 import StudentContext from '../provider/StudentsProvider';
+import { IconButton } from 'react-native-paper';
 
 function Home() {
     const { myStudents, setMyStudents } = useContext(StudentContext);
@@ -53,11 +54,7 @@ function Home() {
         <View style={styles.mainContainer}>
             <StatusBarBackground barStyle={'dark-content'} style={{ backgroundColor: 'transparent' }} />
             <View style={styles.topBar}>
-                <TouchableOpacity onPress={() => setAddLessonMode(true)}>
-                    <View style={styles.buttonWrapper}>
-                        <Image style={styles.image} source={require('../../images/plus.png')} />
-                    </View>
-                </TouchableOpacity>
+                <IconButton icon="plus" size={40} style={styles.button} onPress={() => setAddLessonMode(true)} />
             </View>
             <View style={styles.content}>
                 <Calendar
@@ -88,14 +85,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     topBar: {
-        marginVertical: 10,
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
-    buttonWrapper: {
-        marginEnd: 10,
-        width: 30,
-        height: 30,
+    button: {
+        marginVertical: 0,
     },
     image: {
         width: '100%',
