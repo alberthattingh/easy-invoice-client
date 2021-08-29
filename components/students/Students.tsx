@@ -44,6 +44,7 @@ export default function Students() {
 const styles = StyleSheet.create({
     mainContainer: {
         padding: 5,
+        flex: 1,
     },
     topBar: {
         marginVertical: 10,
