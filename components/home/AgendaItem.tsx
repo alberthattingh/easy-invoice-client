@@ -18,6 +18,10 @@ function AgendaItem(props: AgendaItemPropsModel) {
                 throw new Error('Error deleting lesson');
             })
             .then((response) => response.data)
+            .then((lessons) => {
+                setIsDeleting(false);
+                return lessons;
+            })
             .then((lessons) => setLessons(lessons))
             .catch((error) => {
                 console.log(error.toString());

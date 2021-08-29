@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Button, Linking, ActivityIndicator } from 'react-native';
-import LoginInput from './LoginInput';
+import { Text, View, StyleSheet, Linking, ActivityIndicator } from 'react-native';
 import LoginPropsModel from '../../models/LoginPropsModel';
 import { AppScreens } from '../../models/AppScreensEnum';
 import { login, setToken } from '../../services/LoginService';
@@ -8,12 +7,15 @@ import UserModel from '../../models/UserModel';
 import { AxiosResponse } from 'axios';
 import SimpleModal from '../popups/SimpleModal';
 import StatusBarBackground from '../shared/StatusBarBackground';
+import { Button, TextInput } from 'react-native-paper';
 
 function Login(props: LoginPropsModel) {
     const { navigation } = props;
 
     const [loading, setLoading] = useState<boolean>(false);
+    const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
     const [errorModalVisible, setErrorModalVisible] = useState<boolean>(false);
+
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
@@ -41,35 +43,49 @@ function Login(props: LoginPropsModel) {
 
     return (
         <View style={styles.mainContainer}>
-            <StatusBarBackground style={{ backgroundColor: '#22aaa1' }} />
-            <View style={styles.loginContainer}>
+            <StatusBarBackground barStyle={'dark-content'} style={{ backgroundColor: 'transparent' }} />
+            <View style={styles.content}>
                 <Text style={styles.title}>Login</Text>
-                <View style={styles.inputsContainer}>
-                    <LoginInput
-                        placeholder="Email"
-                        changeHandler={setEmail}
-                        icon={require('../../images/envelope.png')}
+                <View>
+                    <TextInput
+                        style={styles.formInput}
+                        label="Email"
+                        left={<TextInput.Icon name="email-outline" />}
+                        mode="outlined"
+                        disabled={loading}
+                        onChangeText={setEmail}
                     />
-                    <LoginInput
-                        placeholder="Password"
-                        changeHandler={setPassword}
-                        icon={require('../../images/padlock.png')}
+                    <TextInput
+                        style={styles.formInput}
+                        label="Password"
+                        secureTextEntry={passwordHidden}
+                        left={<TextInput.Icon name="lock-outline" />}
+                        right={<TextInput.Icon name="eye" onPress={() => setPasswordHidden(!passwordHidden)} />}
+                        mode="outlined"
+                        disabled={loading}
+                        onChangeText={setPassword}
                     />
 
                     <Text style={[styles.link, styles.rightSide]} onPress={() => Linking.openURL('https://google.com')}>
                         Forgot password?
                     </Text>
                 </View>
-                <View style={styles.actionsContainer}>
-                    <View style={styles.submitWrapper}>
-                        <Button title="LOGIN" onPress={onLoginAttempt} />
-                    </View>
-                    <View style={styles.signupWrapper}>
-                        <Text style={styles.link} onPress={() => navigation.navigate(AppScreens.SignUp)}>
-                            No account? Sign up here!
-                        </Text>
-                    </View>
+                <View style={styles.action}>
+                    <Button
+                        style={styles.logInButton}
+                        mode="contained"
+                        onPress={() => onLoginAttempt()}
+                        disabled={loading}
+                        loading={loading}
+                    >
+                        Login
+                    </Button>
                 </View>
+            </View>
+            <View style={styles.signUpWrapper}>
+                <Text style={styles.link} onPress={() => navigation.navigate(AppScreens.SignUp)}>
+                    Don't have an account? Sign up
+                </Text>
             </View>
             {loading && (
                 <View style={styles.loader}>
@@ -91,54 +107,39 @@ function Login(props: LoginPropsModel) {
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: '#22aaa1',
         alignItems: 'stretch',
         justifyContent: 'center',
+        padding: 5,
     },
-    loginContainer: {
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.7,
-        shadowRadius: 10,
-        elevation: 10,
-
+    content: {
+        padding: 20,
         flex: 1,
-        backgroundColor: 'white',
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: 50,
-        margin: 50,
-        borderRadius: 25,
+        justifyContent: 'center',
     },
     title: {
-        textAlign: 'center',
         fontSize: 32,
+        marginBottom: 20,
     },
-    inputsContainer: {
-        display: 'flex',
+    formInput: {
+        marginBottom: 5,
+    },
+    action: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 20,
+    },
+    signUpWrapper: {
+        marginTop: 'auto',
+        textAlign: 'center',
+        flexDirection: 'row',
         justifyContent: 'center',
+        padding: 20,
     },
-    loginInput: {
-        marginVertical: 25,
-        width: '80%',
-        alignSelf: 'center',
-        backgroundColor: 'grey',
-        height: 50,
-        fontSize: 18,
-    },
-    actionsContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-    },
-    submitWrapper: {
-        backgroundColor: '#22aaa1',
+    logInButton: {
         borderRadius: 25,
-        marginVertical: 15,
+        padding: 10,
+        marginBottom: 50,
     },
-    signupWrapper: {},
     link: {
         color: 'blue',
     },
