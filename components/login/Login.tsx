@@ -25,7 +25,7 @@ function Login(props: LoginPropsModel) {
                 return response.data;
             })
             .then((user: UserModel) => {
-                return setToken(user.token);
+                return setToken(user.token as string);
             })
             .then(() => {
                 navigation.navigate(AppScreens.Home);
@@ -65,7 +65,7 @@ function Login(props: LoginPropsModel) {
                         <Button title="LOGIN" onPress={onLoginAttempt} />
                     </View>
                     <View style={styles.signupWrapper}>
-                        <Text style={styles.link} onPress={() => Linking.openURL('https://google.com')}>
+                        <Text style={styles.link} onPress={() => navigation.navigate(AppScreens.SignUp)}>
                             No account? Sign up here!
                         </Text>
                     </View>

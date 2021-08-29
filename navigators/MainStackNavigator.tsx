@@ -3,9 +3,11 @@ import Login from '../components/login/Login';
 import React from 'react';
 import { AppScreens } from '../models/AppScreensEnum';
 import PrimaryTabNavigator from './PrimaryTabNavigator';
+import SignUp from '../components/signup/SignUp';
 
 export type MainStackParamList = {
     Login: undefined;
+    SignUp: undefined;
     Home: undefined;
 };
 
@@ -15,6 +17,7 @@ const MainFlowNavigator = () => {
     return (
         <MainStack.Navigator headerMode="none">
             <MainStack.Screen name={AppScreens.Login} component={Login} />
+            <MainStack.Screen name={AppScreens.SignUp} component={SignUp} />
             <MainStack.Screen name={AppScreens.Home} component={PrimaryTabNavigator} />
         </MainStack.Navigator>
     );
