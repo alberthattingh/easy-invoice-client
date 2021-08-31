@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Linking, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, Linking, ActivityIndicator, Keyboard } from 'react-native';
 import LoginPropsModel from '../../models/LoginPropsModel';
 import { AppScreens } from '../../models/AppScreensEnum';
 import { login, setToken } from '../../services/LoginService';
 import UserModel from '../../models/UserModel';
 import { AxiosResponse } from 'axios';
-import SimpleModal from '../popups/SimpleModal';
 import StatusBarBackground from '../shared/StatusBarBackground';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, Snackbar, TextInput } from 'react-native-paper';
 
 function Login(props: LoginPropsModel) {
     const { navigation } = props;
@@ -15,11 +14,27 @@ function Login(props: LoginPropsModel) {
     const [loading, setLoading] = useState<boolean>(false);
     const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
     const [errorModalVisible, setErrorModalVisible] = useState<boolean>(false);
+    const [snackMessage, setSnackMessage] = useState<string>('');
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
     const onLoginAttempt = () => {
+        Keyboard.dismiss();
+
+        if (!(email || password)) {
+            setSnackMessage('Please enter your email and password');
+            setErrorModalVisible(true);
+            return;
+        } else if (!email) {
+            setSnackMessage('Please enter your email');
+            setErrorModalVisible(true);
+            return;
+        } else if (!password) {
+            setSnackMessage('Please enter your password');
+            setErrorModalVisible(true);
+            return;
+        }
         setLoading(true);
 
         login(email, password)
@@ -33,7 +48,7 @@ function Login(props: LoginPropsModel) {
                 navigation.navigate(AppScreens.Home);
             })
             .catch((error) => {
-                console.log(error.toString());
+                setSnackMessage('Login failed. Please try again or sign up.');
                 setErrorModalVisible(true);
             })
             .finally(() => {
@@ -92,14 +107,16 @@ function Login(props: LoginPropsModel) {
                     <ActivityIndicator size="large" />
                 </View>
             )}
-            {errorModalVisible && (
-                <SimpleModal
-                    message="Login failed"
-                    buttonText="OK"
-                    modalVisible={errorModalVisible}
-                    setModalVisible={setErrorModalVisible}
-                />
-            )}
+            <Snackbar
+                visible={errorModalVisible}
+                onDismiss={() => setErrorModalVisible(false)}
+                action={{
+                    label: 'OK',
+                    onPress: () => setErrorModalVisible(false),
+                }}
+            >
+                {snackMessage}
+            </Snackbar>
         </View>
     );
 }

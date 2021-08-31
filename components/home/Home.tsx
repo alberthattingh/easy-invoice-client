@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { Calendar, CalendarList } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import { getSimpleDate } from '../../services/DateService';
 import Agenda from './Agenda';
 import LessonModel from '../../models/LessonModel';
@@ -8,9 +8,10 @@ import { getLessons } from '../../services/LessonService';
 import NewLessonModal from '../popups/NewLessonModal';
 import StatusBarBackground from '../shared/StatusBarBackground';
 import StudentContext from '../provider/StudentsProvider';
-import { IconButton } from 'react-native-paper';
+import { IconButton, useTheme } from 'react-native-paper';
 
 function Home() {
+    const { colors } = useTheme();
     const { myStudents, setMyStudents } = useContext(StudentContext);
 
     const [scheduledLessons, setScheduledLessons] = useState<LessonModel[]>([]);
@@ -23,7 +24,6 @@ function Home() {
         getLessons()
             .then((response) => response.data)
             .then((lessons) => {
-                console.log('Updating lessons in state...');
                 setScheduledLessons(lessons);
             })
             .catch((error) => {
@@ -34,12 +34,13 @@ function Home() {
     scheduledLessons.forEach((value) => {
         markedDates[getSimpleDate(new Date(value.lessonDate))] = {
             marked: true,
+            dotColor: colors.accent,
         };
     });
     markedDates[selectedDate] = {
         marked: false,
         selected: true,
-        selectedColor: 'blue',
+        selectedColor: colors.primary,
     };
 
     const lessonsForSelectedDate = scheduledLessons.filter((lesson) => {
@@ -59,6 +60,7 @@ function Home() {
             <View style={styles.content}>
                 <Calendar
                     style={styles.calendar}
+                    theme={{ arrowColor: colors.primary }}
                     onDayPress={(day) => setSelectedDate(day.dateString)}
                     markedDates={markedDates}
                 />

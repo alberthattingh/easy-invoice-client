@@ -1,7 +1,16 @@
-import { ActivityIndicator, KeyboardAvoidingView, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+    ActivityIndicator,
+    Keyboard,
+    KeyboardAvoidingView,
+    Linking,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+} from 'react-native';
 import React, { useState } from 'react';
 import StatusBarBackground from '../shared/StatusBarBackground';
-import { IconButton, Button, TextInput } from 'react-native-paper';
+import { IconButton, Button, TextInput, Snackbar } from 'react-native-paper';
 import SignUpPropsModel from '../../models/SignUpPropsModel';
 import { AppScreens } from '../../models/AppScreensEnum';
 import { signUp } from '../../services/AccountService';
@@ -11,6 +20,8 @@ function SignUp(props: SignUpPropsModel) {
     const { navigation } = props;
     const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
+    const [snackMessage, setSnackMessage] = useState<string>('');
 
     const [name, setName] = useState<string>('');
     const [surname, setSurname] = useState<string>('');
@@ -18,8 +29,12 @@ function SignUp(props: SignUpPropsModel) {
     const [password, setPassword] = useState<string>('');
 
     const submitSignUp = () => {
+        Keyboard.dismiss();
+
         if (!(name && surname && email && password)) {
-            return; // TODO: Snackbar with error
+            setSnackMessage('Please complete all fields');
+            setShowSnackBar(true);
+            return;
         }
         setIsLoading(true);
 
@@ -35,7 +50,8 @@ function SignUp(props: SignUpPropsModel) {
             .then((user) => setToken(user.token as string))
             .then(() => navigation.navigate(AppScreens.Home))
             .catch((error) => {
-                console.log(error.toString());
+                setSnackMessage('An error occurred. Could not create account.');
+                setShowSnackBar(true);
             })
             .finally(() => setIsLoading(false));
     };
@@ -102,6 +118,16 @@ function SignUp(props: SignUpPropsModel) {
                         </Button>
                     </View>
                 </ScrollView>
+                <Snackbar
+                    visible={showSnackBar}
+                    onDismiss={() => setShowSnackBar(false)}
+                    action={{
+                        label: 'OK',
+                        onPress: () => setShowSnackBar(false),
+                    }}
+                >
+                    {snackMessage}
+                </Snackbar>
             </KeyboardAvoidingView>
         </View>
     );

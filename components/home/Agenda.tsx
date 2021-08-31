@@ -1,10 +1,14 @@
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import AgendaPropsModel from '../../models/AgendaPropsModel';
 import AgendaItem from './AgendaItem';
 import { getSimpleTime } from '../../services/DateService';
+import { Snackbar } from 'react-native-paper';
 
 function Agenda(props: AgendaPropsModel) {
+    const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
+    const [snackMessage, setSnackMessage] = useState<string>('');
+
     return (
         <View style={[styles.container, props.style]}>
             <ScrollView style={styles.list}>
@@ -12,7 +16,16 @@ function Agenda(props: AgendaPropsModel) {
                     props.lessons.map((value, index) => {
                         const date = new Date(value.lessonDate);
                         const time = getSimpleTime(date);
-                        return <AgendaItem time={time} lesson={value} key={index} setLessons={props.setLessons} />;
+                        return (
+                            <AgendaItem
+                                time={time}
+                                lesson={value}
+                                key={index}
+                                setLessons={props.setLessons}
+                                setShowSnackBar={setShowSnackBar}
+                                setSnackMessage={setSnackMessage}
+                            />
+                        );
                     })
                 ) : (
                     <View style={styles.emptyAgenda}>
@@ -20,6 +33,16 @@ function Agenda(props: AgendaPropsModel) {
                     </View>
                 )}
             </ScrollView>
+            <Snackbar
+                visible={showSnackBar}
+                onDismiss={() => setShowSnackBar(false)}
+                action={{
+                    label: 'OK',
+                    onPress: () => setShowSnackBar(false),
+                }}
+            >
+                {snackMessage}
+            </Snackbar>
         </View>
     );
 }

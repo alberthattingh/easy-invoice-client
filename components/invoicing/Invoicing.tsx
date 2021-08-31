@@ -17,7 +17,6 @@ export default function Invoicing() {
         getAllInvoices()
             .then((response) => response.data)
             .then((invoices) => {
-                console.log('Updating invoices in state...');
                 setInvoices(invoices);
             })
             .catch((error) => console.log(error));

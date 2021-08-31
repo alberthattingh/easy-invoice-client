@@ -1,7 +1,7 @@
 import StudentModel from './StudentModel';
 
 export default interface LessonModel {
-    lessonId: number;
+    lessonId?: number;
     lessonDate: string;
     student?: StudentModel;
     studentId: number;

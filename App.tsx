@@ -10,6 +10,7 @@ export default function App() {
             ...DefaultTheme.colors,
             primary: 'tomato',
             accent: 'yellow',
+            onSurface: 'silver',
         },
     };
 

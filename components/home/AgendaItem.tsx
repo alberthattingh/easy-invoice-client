@@ -5,12 +5,13 @@ import AgendaItemPropsModel from '../../models/AgendaItemPropsModel';
 import { deleteLesson, getLessons } from '../../services/LessonService';
 
 function AgendaItem(props: AgendaItemPropsModel) {
-    const { time, lesson, setLessons } = props;
+    const { time, lesson, setLessons, setSnackMessage, setShowSnackBar } = props;
+
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
     const cancelLesson = () => {
         setIsDeleting(true);
-        deleteLesson(lesson.lessonId)
+        deleteLesson(lesson.lessonId as number)
             .then((response) => {
                 if (response.status === 200) {
                     return getLessons();
@@ -24,7 +25,8 @@ function AgendaItem(props: AgendaItemPropsModel) {
             })
             .then((lessons) => setLessons(lessons))
             .catch((error) => {
-                console.log(error.toString());
+                setSnackMessage('An error occurred. Could not delete.');
+                setShowSnackBar(true);
             });
     };
 

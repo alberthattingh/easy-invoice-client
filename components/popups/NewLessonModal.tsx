@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Button, Modal, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Button, Keyboard, Modal, StyleSheet, Text, View } from 'react-native';
 import NewLessonModalPropsModel from '../../models/NewLessonModalPropsModel';
 import ModalSelector, { IOption } from 'react-native-modal-selector';
 import StudentModel from '../../models/StudentModel';
@@ -9,6 +9,7 @@ import { addNewLesson } from '../../services/LessonService';
 import CustomDatePicker from '../shared/CustomDatePicker';
 import CustomTimePicker from '../shared/CustomTimePicker';
 import { TimeObjectModel } from '../../models/TimeObjectModel';
+import { Snackbar, TextInput } from 'react-native-paper';
 
 function NewLessonModal(props: NewLessonModalPropsModel) {
     const { visible, setVisible, students, newLessonCallback } = props;
@@ -18,7 +19,10 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
             label: `${s.firstName} ${s.lastName}`,
         };
     });
+
     const [loading, setLoading] = useState<boolean>(false);
+    const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
+    const [snackMessage, setSnackMessage] = useState<string>('');
 
     const [selectedStudent, setSelectedStudent] = useState<StudentModel>();
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -31,15 +35,14 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     const handleStudentSelect = (option: IOption) => {
         const student = students.find((s) => s.studentId === option.key);
         setSelectedStudent(student);
-        console.log(student);
-        console.log(selectedStudent);
-        setTimeout(() => console.log(selectedStudent), 5000);
     };
 
     const handleDurationChange = (text: string) => {
         const d = Number(text);
         if (Number.isNaN(d)) {
-            return; // TODO: Show error message
+            setSnackMessage('Invalid duration');
+            setShowSnackBar(true);
+            return;
         }
         setDuration(d);
     };
@@ -50,11 +53,17 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     };
 
     const onSave = () => {
-        if (selectedStudent === undefined || selectedStudent === null) {
-            return; // TODO: Show error message
+        Keyboard.dismiss();
+
+        if (!selectedStudent) {
+            setSnackMessage('Please select a student');
+            setShowSnackBar(true);
+            return;
         }
-        if (duration === undefined || duration === null || duration === 0) {
-            return; // TODO: Show error message
+        if (!duration) {
+            setSnackMessage('Please enter a valid duration');
+            setShowSnackBar(true);
+            return;
         }
         setLoading(true);
 
@@ -64,16 +73,15 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
             studentId: selectedStudent.studentId ?? -1,
             duration: duration,
         };
-        console.log(newLesson);
 
         addNewLesson(newLesson)
             .then((response) => response.data)
             .then((lesson) => {
-                console.log(lesson);
                 newLessonCallback(lesson);
             })
             .catch((error) => {
-                console.log(error);
+                setSnackMessage('An error occurred. Could not create entry.');
+                setShowSnackBar(true);
             })
             .finally(() => {
                 setLoading(false);
@@ -93,7 +101,7 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
                     <ModalSelector
                         data={studentData}
                         initValue={'Select a student'}
-                        selectedKey={selectedStudent === undefined ? '' : selectedStudent.studentId}
+                        selectedKey={!selectedStudent ? '' : selectedStudent.studentId}
                         onChange={(option) => handleStudentSelect(option)}
                     />
                 </View>
@@ -104,16 +112,14 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
                     <CustomTimePicker label="Time" selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
                 </View>
                 <View style={styles.formGroup}>
-                    <Text>Duration</Text>
-                    <View style={styles.durationInputGroup}>
-                        <TextInput
-                            style={styles.durationInput}
-                            defaultValue={'1'}
-                            keyboardType={'numeric'}
-                            onChangeText={(text) => handleDurationChange(text)}
-                        />
-                        <Text style={styles.measure}>hours</Text>
-                    </View>
+                    <TextInput
+                        label="Duration"
+                        mode="outlined"
+                        onChangeText={(duration) => handleDurationChange(duration)}
+                        keyboardType="numeric"
+                        defaultValue="1"
+                        right={<TextInput.Affix text="hours" />}
+                    />
                 </View>
             </View>
             {loading && (
@@ -121,6 +127,16 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
                     <ActivityIndicator size="large" />
                 </View>
             )}
+            <Snackbar
+                visible={showSnackBar}
+                onDismiss={() => setShowSnackBar(false)}
+                action={{
+                    label: 'OK',
+                    onPress: () => setShowSnackBar(false),
+                }}
+            >
+                {snackMessage}
+            </Snackbar>
         </Modal>
     );
 }

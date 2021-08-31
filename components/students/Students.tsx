@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import StudentModel from '../../models/StudentModel';
 import StudentList from './StudentList';
 import SimpleTextCard from './SimpleTextCard';

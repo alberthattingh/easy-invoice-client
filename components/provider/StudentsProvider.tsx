@@ -15,7 +15,6 @@ export function StudentsProvider(props: { children: any }) {
         getStudents()
             .then((response) => response.data)
             .then((students) => {
-                console.log('Updating students in state..');
                 setMyStudents(students);
             })
             .catch((error) => {

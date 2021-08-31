@@ -1,22 +1,24 @@
 import {
     ActivityIndicator,
     Button,
+    Keyboard,
     KeyboardAvoidingView,
     Modal,
     ScrollView,
     StyleSheet,
-    Text,
-    TextInput,
     View,
 } from 'react-native';
 import React, { useState } from 'react';
 import NewStudentModalPropsModel from '../../models/NewStudentModalPropsModel';
 import StudentModel from '../../models/StudentModel';
 import { addNewStudent } from '../../services/StudentService';
+import { Snackbar, TextInput } from 'react-native-paper';
 
 export default function NewStudentModal(props: NewStudentModalPropsModel) {
     const { visible, setVisible, newStudentCallback } = props;
     const [loading, setLoading] = useState<boolean>(false);
+    const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
+    const [snackMessage, setSnackMessage] = useState<string>('');
 
     const [name, setName] = useState<string>();
     const [surname, setSurname] = useState<string>();
@@ -31,20 +33,30 @@ export default function NewStudentModal(props: NewStudentModalPropsModel) {
     const handleFeeInput = (value: string) => {
         const fee = Number(value);
         if (Number.isNaN(fee)) {
-            return; // TODO: Show error message
+            setSnackMessage('Invalid rate');
+            setShowSnackBar(true);
+            return;
         }
         setFee(fee);
     };
 
     const onSave = () => {
-        if (name === undefined || name === null) {
-            return; // TODO: Show error message
+        Keyboard.dismiss();
+
+        if (!name) {
+            setSnackMessage('Name is required');
+            setShowSnackBar(true);
+            return;
         }
-        if (surname === undefined || surname === null) {
-            return; // TODO: Show error message
+        if (!surname) {
+            setSnackMessage('Surname is required');
+            setShowSnackBar(true);
+            return; //
         }
-        if (fee === undefined || fee === null) {
-            return; // TODO: Show error message
+        if (!fee) {
+            setSnackMessage('A standard rate for this student is required');
+            setShowSnackBar(true);
+            return;
         }
         setLoading(true);
 
@@ -64,11 +76,11 @@ export default function NewStudentModal(props: NewStudentModalPropsModel) {
         addNewStudent(newStudent)
             .then((response) => response.data)
             .then((student) => {
-                console.log(student);
                 newStudentCallback(student);
             })
             .catch((error) => {
-                console.log(error);
+                setSnackMessage('An error occurred. Could not add student.');
+                setShowSnackBar(true);
             })
             .finally(() => {
                 setLoading(false);
@@ -83,51 +95,46 @@ export default function NewStudentModal(props: NewStudentModalPropsModel) {
                 <Button title={'Save'} onPress={onSave} />
             </View>
             <KeyboardAvoidingView behavior={'padding'} style={styles.kav}>
-                <View style={styles.mainForm}>
+                <ScrollView style={styles.mainForm}>
                     <View style={styles.formGroup}>
-                        <TextInput
-                            style={styles.textInput}
-                            onChangeText={(value) => setName(value)}
-                            placeholder={'Name'}
-                        />
+                        <TextInput mode="outlined" onChangeText={(value) => setName(value)} label="Name" />
+                    </View>
+                    <View style={styles.formGroup}>
+                        <TextInput mode="outlined" onChangeText={(value) => setSurname(value)} label="Surname" />
+                    </View>
+                    <View style={styles.formGroup}>
+                        <TextInput mode="outlined" onChangeText={(value) => setEmail(value)} label="Email" />
+                    </View>
+                    <View style={styles.formGroup}>
+                        <TextInput mode="outlined" onChangeText={(value) => setCell(value)} label="Cell" />
                     </View>
                     <View style={styles.formGroup}>
                         <TextInput
-                            style={styles.textInput}
-                            onChangeText={(value) => setSurname(value)}
-                            placeholder={'Surname'}
-                        />
-                    </View>
-                    <View style={styles.formGroup}>
-                        <TextInput
-                            style={styles.textInput}
-                            onChangeText={(value) => setEmail(value)}
-                            placeholder={'Email'}
-                        />
-                    </View>
-                    <View style={styles.formGroup}>
-                        <TextInput
-                            style={styles.textInput}
-                            onChangeText={(value) => setCell(value)}
-                            placeholder={'Cell'}
-                        />
-                    </View>
-                    <View style={styles.formGroup}>
-                        <TextInput
-                            style={styles.textInput}
+                            mode="outlined"
+                            left={<TextInput.Affix text="R" />}
                             keyboardType={'numeric'}
                             onChangeText={(value) => handleFeeInput(value)}
-                            placeholder={'Hourly Fee'}
+                            label="Hourly Rate"
                         />
                     </View>
                     <View style={styles.empty} />
-                </View>
+                </ScrollView>
             </KeyboardAvoidingView>
             {loading && (
                 <View style={styles.loader}>
                     <ActivityIndicator size="large" />
                 </View>
             )}
+            <Snackbar
+                visible={showSnackBar}
+                onDismiss={() => setShowSnackBar(false)}
+                action={{
+                    label: 'OK',
+                    onPress: () => setShowSnackBar(false),
+                }}
+            >
+                {snackMessage}
+            </Snackbar>
         </Modal>
     );
 }
@@ -145,10 +152,9 @@ const styles = StyleSheet.create({
     mainForm: {
         marginTop: 25,
         paddingHorizontal: 50,
-        justifyContent: 'flex-end',
     },
     formGroup: {
-        marginBottom: 25,
+        marginBottom: 20,
     },
     empty: {
         height: 25,
