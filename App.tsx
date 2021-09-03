@@ -8,9 +8,10 @@ export default function App() {
         ...DefaultTheme,
         colors: {
             ...DefaultTheme.colors,
-            primary: 'tomato',
-            accent: 'yellow',
-            onSurface: 'silver',
+            primary: '#2a9d8f',
+            accent: '#e9c46a',
+            onSurface: '#264653',
+            surface: '#FFF',
         },
     };
 
