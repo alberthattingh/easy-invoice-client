@@ -1,18 +1,39 @@
 import { ActivityIndicator, Avatar, Card, IconButton } from 'react-native-paper';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StudentListItemPropsModel } from '../../models/StudentListItemPropsModel';
+import { getStudents, removeStudent } from '../../services/StudentService';
+import { getRecentInvoices } from '../../services/InvoiceService';
+import StudentContext from '../provider/StudentsProvider';
 
 function StudentListItem(props: StudentListItemPropsModel) {
-    const { student } = props;
+    const { student, setShowSnackBar, setSnackMessage } = props;
+    const { myStudents, setMyStudents } = useContext(StudentContext);
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
     const deleteStudent = () => {
         if (!student.studentId) {
             return;
         }
-        // TODO: Implement deletion
+
         setIsDeleting(true);
-        setTimeout(() => setIsDeleting(false), 5000);
+        removeStudent(student.studentId)
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw new Error('Error deleting student');
+                } else {
+                    return getStudents();
+                }
+            })
+            .then((response) => response.data)
+            .then((students) => {
+                setMyStudents(students);
+                setIsDeleting(false);
+            })
+            .catch((error) => {
+                setSnackMessage('Could not remove this student. An error occurred.');
+                setShowSnackBar(true);
+            })
+            .finally(() => setIsDeleting(false));
     };
 
     return (

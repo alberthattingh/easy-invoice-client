@@ -25,3 +25,14 @@ export async function addNewStudent(student: StudentModel): Promise<AxiosRespons
 
     return axios.post<StudentModel>(BASE_URL, student, config);
 }
+
+export async function removeStudent(studentId: number): Promise<AxiosResponse> {
+    const token = await getToken();
+    const config: AxiosRequestConfig = {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
+
+    return axios.delete<AxiosResponse>(`${BASE_URL}/${studentId}`, config);
+}

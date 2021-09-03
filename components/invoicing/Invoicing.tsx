@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StudentContext from '../provider/StudentsProvider';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import StatusBarBackground from '../shared/StatusBarBackground';
 import RecentInvoices from './RecentInvoicesList';
-import { getAllInvoices } from '../../services/InvoiceService';
+import { getRecentInvoices } from '../../services/InvoiceService';
 import { InvoiceModel } from '../../models/InvoiceModels';
 import NewInvoiceModal from '../popups/NewInvoiceModal';
 import { IconButton } from 'react-native-paper';
@@ -12,12 +12,17 @@ export default function Invoicing() {
     const { myStudents, setMyStudents } = useContext(StudentContext);
     const [invoices, setInvoices] = useState<InvoiceModel[]>([]);
     const [createInvoiceMode, setCreateInvoiceMode] = useState<boolean>(false);
+    const [skip, setSkip] = useState<number>(0);
 
     useEffect(() => {
-        getAllInvoices()
+        getRecentInvoices({
+            skip,
+            take: 20,
+        })
             .then((response) => response.data)
             .then((invoices) => {
                 setInvoices(invoices);
+                setSkip(skip);
             })
             .catch((error) => console.log(error));
     }, []);
