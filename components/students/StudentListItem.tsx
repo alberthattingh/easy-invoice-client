@@ -26,14 +26,14 @@ function StudentListItem(props: StudentListItemPropsModel) {
             })
             .then((response) => response.data)
             .then((students) => {
-                setMyStudents(students);
                 setIsDeleting(false);
+                setMyStudents(students);
             })
             .catch((error) => {
+                setIsDeleting(false);
                 setSnackMessage('Could not remove this student. An error occurred.');
                 setShowSnackBar(true);
-            })
-            .finally(() => setIsDeleting(false));
+            });
     };
 
     return (
