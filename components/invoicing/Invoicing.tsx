@@ -27,6 +27,10 @@ export default function Invoicing() {
             .catch((error) => console.log(error));
     }, []);
 
+    const addNewInvoiceToState = (invoice: InvoiceModel) => {
+        setInvoices([invoice, ...invoices]);
+    };
+
     return (
         <View style={styles.mainContainer}>
             <StatusBarBackground barStyle={'dark-content'} style={{ backgroundColor: 'transparent' }} />
@@ -34,7 +38,12 @@ export default function Invoicing() {
                 <IconButton icon="plus" size={40} style={styles.button} onPress={() => setCreateInvoiceMode(true)} />
             </View>
             <RecentInvoices invoices={invoices} />
-            <NewInvoiceModal visible={createInvoiceMode} setVisible={setCreateInvoiceMode} myStudents={myStudents} />
+            <NewInvoiceModal
+                visible={createInvoiceMode}
+                setVisible={setCreateInvoiceMode}
+                myStudents={myStudents}
+                newInvoiceCallback={addNewInvoiceToState}
+            />
         </View>
     );
 }

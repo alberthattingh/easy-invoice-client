@@ -30,4 +30,5 @@ export interface CreateInvoiceModalPropsModel {
     visible: boolean;
     setVisible: (value: boolean) => void;
     myStudents: StudentModel[];
+    newInvoiceCallback: (invoice: InvoiceModel) => void;
 }

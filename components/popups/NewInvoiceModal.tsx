@@ -23,7 +23,7 @@ import HandlebarsService from '../../services/HandlebarsService';
 const Handlebars = require('react-native-handlebars');
 
 export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
-    const { visible, setVisible, myStudents } = props;
+    const { visible, setVisible, myStudents, newInvoiceCallback } = props;
 
     const [loading, setLoading] = useState<boolean>(false);
     const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
@@ -84,6 +84,8 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
         })
             .then((response) => response.data)
             .then((invoice) => {
+                newInvoiceCallback(invoice);
+
                 const studentNames = invoice.lessons.map((lesson) => lesson.student?.firstName);
                 const fileName = `${studentNames
                     .filter((name, index) => studentNames.indexOf(name) === index)
