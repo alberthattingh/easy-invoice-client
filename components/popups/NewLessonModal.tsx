@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Button, Keyboard, Modal, StyleSheet, Text, View } from 'react-native';
 import NewLessonModalPropsModel from '../../models/NewLessonModalPropsModel';
 import ModalSelector, { IOption } from 'react-native-modal-selector';
@@ -12,7 +12,7 @@ import { TimeObjectModel } from '../../models/TimeObjectModel';
 import { Snackbar, TextInput } from 'react-native-paper';
 
 function NewLessonModal(props: NewLessonModalPropsModel) {
-    const { visible, setVisible, students, newLessonCallback } = props;
+    const { visible, setVisible, students, newLessonCallback, initialDate } = props;
     const studentData = students.map((s) => {
         return {
             key: s.studentId ?? 0,
@@ -25,12 +25,16 @@ function NewLessonModal(props: NewLessonModalPropsModel) {
     const [snackMessage, setSnackMessage] = useState<string>('');
 
     const [selectedStudent, setSelectedStudent] = useState<StudentModel>();
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [selectedDate, setSelectedDate] = useState<Date>(initialDate);
     const [selectedTime, setSelectedTime] = useState<TimeObjectModel>({
         hours: new Date().getHours(),
         minutes: new Date().getMinutes(),
     });
     const [duration, setDuration] = useState<number>(1);
+
+    useEffect(() => {
+        setSelectedDate(initialDate);
+    }, [initialDate]);
 
     const handleStudentSelect = (option: IOption) => {
         const student = students.find((s) => s.studentId === option.key);

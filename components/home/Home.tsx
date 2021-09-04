@@ -64,15 +64,11 @@ function Home() {
                     onDayPress={(day) => setSelectedDate(day.dateString)}
                     markedDates={markedDates}
                 />
-                <Agenda
-                    style={styles.agenda}
-                    date={selectedDate}
-                    lessons={lessonsForSelectedDate}
-                    setLessons={setScheduledLessons}
-                />
+                <Agenda style={styles.agenda} lessons={lessonsForSelectedDate} setLessons={setScheduledLessons} />
             </View>
             <NewLessonModal
                 visible={addLessonMode}
+                initialDate={new Date(selectedDate)}
                 setVisible={setAddLessonMode}
                 newLessonCallback={onAddNewLesson}
                 students={myStudents}
