@@ -1,5 +1,4 @@
-import { RouteProp } from '@react-navigation/native';
-import StudentModel from './StudentModel';
+import StudentModel from '../StudentModel';
 
 export default interface StudentsContextModel {
     myStudents: StudentModel[];

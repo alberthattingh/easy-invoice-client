@@ -1,3 +1,5 @@
+import { BankingDetails } from './BankingDetails';
+
 export default interface UserModel {
     userId?: number;
     firstName: string;
@@ -7,6 +9,7 @@ export default interface UserModel {
     defaultFee?: number;
     logo?: string;
     userPassword?: string;
+    bankingDetails?: BankingDetails;
 
     token?: string;
 }

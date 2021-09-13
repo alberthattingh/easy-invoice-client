@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View, StyleSheet, Linking, ActivityIndicator, Keyboard } from 'react-native';
 import LoginPropsModel from '../../models/LoginPropsModel';
 import { AppScreens } from '../../models/AppScreensEnum';
@@ -7,9 +7,11 @@ import UserModel from '../../models/UserModel';
 import { AxiosResponse } from 'axios';
 import StatusBarBackground from '../shared/StatusBarBackground';
 import { Button, Snackbar, TextInput } from 'react-native-paper';
+import UserContext from '../provider/UserProvider';
 
 function Login(props: LoginPropsModel) {
     const { navigation } = props;
+    const { setUser } = useContext(UserContext);
 
     const [loading, setLoading] = useState<boolean>(false);
     const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
@@ -42,6 +44,7 @@ function Login(props: LoginPropsModel) {
                 return response.data;
             })
             .then((user: UserModel) => {
+                setUser(user);
                 return setToken(user.token as string);
             })
             .then(() => {

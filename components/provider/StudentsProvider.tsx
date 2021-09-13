@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import StudentModel from '../../models/StudentModel';
 import { getStudents } from '../../services/StudentService';
-import StudentsContextModel from '../../models/StudentsContextModel';
+import StudentsContextModel from '../../models/context-models/StudentsContextModel';
 
 const StudentContext = createContext<StudentsContextModel>({
     myStudents: [],

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Students from '../components/students/Students';
 import { StudentsProvider } from '../components/provider/StudentsProvider';
 import Invoicing from '../components/invoicing/Invoicing';
+import Account from '../components/account/Account';
 
 const Tabs = createBottomTabNavigator();
 
@@ -21,6 +22,7 @@ export default function PrimaryTabNavigator() {
                 <Tabs.Screen name={'Home'} component={Home} options={{ title: 'Home' }} />
                 <Tabs.Screen name={'Students'} component={Students} options={{ title: 'Students' }} />
                 <Tabs.Screen name={'Invoicing'} component={Invoicing} options={{ title: 'Invoice' }} />
+                <Tabs.Screen name={'Account'} component={Account} options={{ title: 'Account' }} />
             </Tabs.Navigator>
         </StudentsProvider>
     );
