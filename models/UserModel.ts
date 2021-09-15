@@ -9,7 +9,8 @@ export default interface UserModel {
     defaultFee?: number;
     logo?: string;
     userPassword?: string;
-    bankingDetails?: BankingDetails;
+    bankingDetails?: BankingDetails[];
+    accountDetails?: BankingDetails[];
 
     token?: string;
 }
