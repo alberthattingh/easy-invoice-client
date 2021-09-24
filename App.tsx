@@ -1,7 +1,7 @@
 import React from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
-import MainFlowNavigator from './navigators/MainStackNavigator';
+import MainFlowNavigator from './navigators/main-stack.navigator';
 
 export default function App() {
     const theme = {

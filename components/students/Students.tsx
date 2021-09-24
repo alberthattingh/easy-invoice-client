@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import StudentModel from '../../models/StudentModel';
-import StudentList from './StudentList';
-import SimpleTextCard from './SimpleTextCard';
-import StatusBarBackground from '../shared/components/StatusBarBackground';
-import NewStudentModal from '../popups/NewStudentModal';
-import StudentContext from '../provider/StudentsProvider';
+import StudentModel from '../../shared/models/student-model';
+import StudentList from './student-list';
+import SimpleTextCard from './simple-text-card';
+import StatusBarBackground from '../../shared/components/status-bar-background';
+import NewStudentModal from '../popups/new-student-modal';
+import StudentContext from '../provider/students-provider';
 import { IconButton } from 'react-native-paper';
 
 export default function Students() {

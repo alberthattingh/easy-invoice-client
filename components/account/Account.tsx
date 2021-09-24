@@ -1,12 +1,12 @@
 import { KeyboardAvoidingView, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useState } from 'react';
-import StatusBarBackground from '../shared/components/StatusBarBackground';
-import ImageSelector from '../shared/components/ImageSelector';
+import StatusBarBackground from '../../shared/components/status-bar-background';
+import ImageSelector from '../../shared/components/image-selector';
 import { Button, Snackbar, TextInput } from 'react-native-paper';
-import UserContext from '../provider/UserProvider';
-import UserModel from '../../models/UserModel';
-import { updateUserDetails } from '../../services/AccountService';
-import { LibraryPermissionStatus } from '../shared/constants/library-permission-status.enum';
+import UserContext from '../provider/user-provider';
+import UserModel from '../../shared/models/user-model';
+import { updateUserDetails } from '../../services/account.service';
+import { LibraryPermissionStatus } from '../../shared/constants/library-permission-status.enum';
 
 function Account() {
     const { user, setUser } = useContext(UserContext);

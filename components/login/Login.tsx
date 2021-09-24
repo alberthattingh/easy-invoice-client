@@ -1,15 +1,22 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, StyleSheet, Linking, ActivityIndicator, Keyboard } from 'react-native';
-import LoginPropsModel from '../../models/LoginPropsModel';
-import { AppScreens } from '../../models/AppScreensEnum';
-import { login, setToken } from '../../services/LoginService';
-import UserModel from '../../models/UserModel';
+import { AppScreens } from '../../shared/constants/app-screens.enum';
+import { login, setToken } from '../../services/login.service';
+import UserModel from '../../shared/models/user-model';
 import { AxiosResponse } from 'axios';
-import StatusBarBackground from '../shared/components/StatusBarBackground';
+import StatusBarBackground from '../../shared/components/status-bar-background';
 import { Button, Snackbar, TextInput } from 'react-native-paper';
-import UserContext from '../provider/UserProvider';
+import UserContext from '../provider/user-provider';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MainStackParamList } from '../../navigators/main-stack.navigator';
 
-function Login(props: LoginPropsModel) {
+type LoginScreenNavProps = StackNavigationProp<MainStackParamList, AppScreens.Login>;
+
+interface Props {
+    navigation: LoginScreenNavProps;
+}
+
+function Login(props: Props) {
     const { navigation } = props;
     const { setUser } = useContext(UserContext);
 

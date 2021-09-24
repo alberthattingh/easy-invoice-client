@@ -1,13 +1,13 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { Calendar } from 'react-native-calendars';
-import { getSimpleDate } from '../../services/DateService';
-import Agenda from './Agenda';
-import LessonModel from '../../models/LessonModel';
-import { getLessons } from '../../services/LessonService';
-import NewLessonModal from '../popups/NewLessonModal';
-import StatusBarBackground from '../shared/components/StatusBarBackground';
-import StudentContext from '../provider/StudentsProvider';
+import { getSimpleDate } from '../../services/date.service';
+import Agenda from './agenda';
+import LessonModel from '../../shared/models/lesson-model';
+import { getLessons } from '../../services/lesson.service';
+import NewLessonModal from '../popups/new-lesson-modal';
+import StatusBarBackground from '../../shared/components/status-bar-background';
+import StudentContext from '../provider/students-provider';
 import { IconButton, useTheme } from 'react-native-paper';
 
 function Home() {

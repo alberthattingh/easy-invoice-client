@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import StudentContext from '../provider/StudentsProvider';
+import StudentContext from '../provider/students-provider';
 import { StyleSheet, View } from 'react-native';
-import StatusBarBackground from '../shared/StatusBarBackground';
-import RecentInvoices from './RecentInvoicesList';
-import { getRecentInvoices } from '../../services/InvoiceService';
-import { InvoiceModel } from '../../models/InvoiceModels';
-import NewInvoiceModal from '../popups/NewInvoiceModal';
+import StatusBarBackground from '../../shared/components/status-bar-background';
+import RecentInvoices from './recent-invoices-list';
+import { getRecentInvoices } from '../../services/invoice.service';
+import { InvoiceModel } from '../../shared/models/invoice-models';
+import NewInvoiceModal from '../popups/new-invoice-modal';
 import { IconButton } from 'react-native-paper';
 
 export default function Invoicing() {

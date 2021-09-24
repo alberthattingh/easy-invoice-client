@@ -1,11 +1,17 @@
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import React, { useState } from 'react';
-import AgendaPropsModel from '../../models/AgendaPropsModel';
-import AgendaItem from './AgendaItem';
-import { getSimpleTime } from '../../services/DateService';
+import AgendaItem from './agenda-item';
+import { getSimpleTime } from '../../services/date.service';
 import { Snackbar } from 'react-native-paper';
+import LessonModel from '../../shared/models/lesson-model';
 
-function Agenda(props: AgendaPropsModel) {
+interface Props {
+    style: any;
+    lessons: LessonModel[];
+    setLessons: (lessons: LessonModel[]) => void;
+}
+
+function Agenda(props: Props) {
     const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
     const [snackMessage, setSnackMessage] = useState<string>('');
 
