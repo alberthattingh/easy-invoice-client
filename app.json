@@ -1,35 +1,36 @@
 {
-  "expo": {
-    "name": "EasyInvoice",
-    "slug": "EasyInvoice",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    },
-    "privacy": "hidden",
-    "description": "",
-    "githubUrl": "https://github.com/alberthattingh/easy-invoice-client"
-  }
+    "expo": {
+        "name": "EasyInvoice",
+        "slug": "EasyInvoice",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/icon.png",
+        "splash": {
+            "image": "./assets/images/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true,
+            "infoPlist": {
+                "NSPhotoLibraryUsageDescription": "This app allows you to upload a logo to be displayed on your generated invoices. Photo library access is required for this reason."
+            }
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/adaptive-icon.png",
+                "backgroundColor": "#FFFFFF"
+            }
+        },
+        "web": {
+            "favicon": "./assets/images/favicon.png"
+        },
+        "privacy": "hidden",
+        "description": "",
+        "githubUrl": "https://github.com/alberthattingh/easy-invoice-client"
+    }
 }

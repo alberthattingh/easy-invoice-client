@@ -1,10 +1,12 @@
-import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useState } from 'react';
-import StatusBarBackground from '../shared/StatusBarBackground';
+import StatusBarBackground from '../shared/components/StatusBarBackground';
+import ImageSelector from '../shared/components/ImageSelector';
 import { Button, Snackbar, TextInput } from 'react-native-paper';
 import UserContext from '../provider/UserProvider';
 import UserModel from '../../models/UserModel';
 import { updateUserDetails } from '../../services/AccountService';
+import { LibraryPermissionStatus } from '../shared/constants/library-permission-status.enum';
 
 function Account() {
     const { user, setUser } = useContext(UserContext);
@@ -22,12 +24,24 @@ function Account() {
     const [branchCode, setBranchCode] = useState<string>(activeBankAccount?.branchCode as string);
     const [notice, setNotice] = useState<string>(activeBankAccount?.paymentInstruction as string);
 
+    const [logo, setLogo] = useState<string>('');
+    const [permissionStatus, setPermissionStatus] = useState<LibraryPermissionStatus>(
+        LibraryPermissionStatus.NotSpecified
+    );
+    const [showPermissionSnack, setShowPermissionSnack] = useState<boolean>(false);
+
     const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
     const [snackMessage, setSnackMessage] = useState<string>('');
 
     const bankingDetailsUnchanged = () => false;
+
+    const openPermissionSettings = async () => {
+        setShowPermissionSnack(false);
+        setPermissionStatus(LibraryPermissionStatus.NotSpecified);
+        await Linking.openURL('app-settings:');
+    };
 
     const save = () => {
         if (!name) {
@@ -182,6 +196,21 @@ function Account() {
                             />
                         </View>
                     </View>
+                    <View style={styles.section}>
+                        <Text style={styles.heading}>Custom logo</Text>
+                        <ImageSelector
+                            imageUri={logo}
+                            setShowPermissionSnack={setShowPermissionSnack}
+                            setShowSnackBar={setShowSnackBar}
+                            setSnackMessage={setSnackMessage}
+                            showPermissionSnack={showPermissionSnack}
+                            showSnackBar={showSnackBar}
+                            snackMessage={snackMessage}
+                            onPressCallback={(imageRef) => {
+                                setLogo(imageRef);
+                            }}
+                        />
+                    </View>
                     <View style={styles.action}>
                         <Button
                             style={styles.saveButton}
@@ -200,6 +229,16 @@ function Account() {
                     action={{
                         label: 'OK',
                         onPress: () => setShowSnackBar(false),
+                    }}
+                >
+                    {snackMessage}
+                </Snackbar>
+                <Snackbar
+                    visible={showPermissionSnack}
+                    onDismiss={() => setShowPermissionSnack(false)}
+                    action={{
+                        label: 'OPEN SETTINGS',
+                        onPress: () => openPermissionSettings(),
                     }}
                 >
                     {snackMessage}

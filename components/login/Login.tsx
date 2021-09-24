@@ -5,7 +5,7 @@ import { AppScreens } from '../../models/AppScreensEnum';
 import { login, setToken } from '../../services/LoginService';
 import UserModel from '../../models/UserModel';
 import { AxiosResponse } from 'axios';
-import StatusBarBackground from '../shared/StatusBarBackground';
+import StatusBarBackground from '../shared/components/StatusBarBackground';
 import { Button, Snackbar, TextInput } from 'react-native-paper';
 import UserContext from '../provider/UserProvider';
 

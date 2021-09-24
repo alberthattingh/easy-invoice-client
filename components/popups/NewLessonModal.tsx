@@ -6,8 +6,8 @@ import StudentModel from '../../models/StudentModel';
 import { combineDateAndTime } from '../../services/DateService';
 import LessonModel from '../../models/LessonModel';
 import { addNewLesson } from '../../services/LessonService';
-import CustomDatePicker from '../shared/CustomDatePicker';
-import CustomTimePicker from '../shared/CustomTimePicker';
+import CustomDatePicker from '../shared/components/CustomDatePicker';
+import CustomTimePicker from '../shared/components/CustomTimePicker';
 import { TimeObjectModel } from '../../models/TimeObjectModel';
 import { Snackbar, TextInput } from 'react-native-paper';
 

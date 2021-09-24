@@ -1,4 +1,4 @@
-import { CustomDatePickerPropsModel } from '../../models/CustomDatePickerPropsModel';
+import { CustomDatePickerPropsModel } from '../../../models/CustomDatePickerPropsModel';
 import { View } from 'react-native';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-paper';

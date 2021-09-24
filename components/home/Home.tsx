@@ -6,7 +6,7 @@ import Agenda from './Agenda';
 import LessonModel from '../../models/LessonModel';
 import { getLessons } from '../../services/LessonService';
 import NewLessonModal from '../popups/NewLessonModal';
-import StatusBarBackground from '../shared/StatusBarBackground';
+import StatusBarBackground from '../shared/components/StatusBarBackground';
 import StudentContext from '../provider/StudentsProvider';
 import { IconButton, useTheme } from 'react-native-paper';
 

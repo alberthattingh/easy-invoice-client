@@ -10,9 +10,9 @@ import {
     View,
 } from 'react-native';
 import { CreateInvoiceModalPropsModel } from '../../models/InvoiceModels';
-import MultiSelectionBox from '../shared/MultiSelectionBox';
+import MultiSelectionBox from '../shared/components/MultiSelectionBox';
 import { SelectableItem } from '../../models/MultiSelectionBoxPropsModel';
-import CustomDatePicker from '../shared/CustomDatePicker';
+import CustomDatePicker from '../shared/components/CustomDatePicker';
 import { Snackbar, TextInput } from 'react-native-paper';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';

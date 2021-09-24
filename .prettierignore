@@ -3,3 +3,8 @@ build
 coverage
 .eslintrc.json
 .expo/
+
+# Ignore config files
+package.json
+package-lock.json
+.vscode/

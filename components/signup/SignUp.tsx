@@ -9,7 +9,7 @@ import {
     View,
 } from 'react-native';
 import React, { useState } from 'react';
-import StatusBarBackground from '../shared/StatusBarBackground';
+import StatusBarBackground from '../shared/components/StatusBarBackground';
 import { IconButton, Button, TextInput, Snackbar } from 'react-native-paper';
 import SignUpPropsModel from '../../models/SignUpPropsModel';
 import { AppScreens } from '../../models/AppScreensEnum';
