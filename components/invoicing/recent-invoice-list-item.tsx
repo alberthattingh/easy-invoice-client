@@ -19,10 +19,10 @@ export default function RecentInvoiceListItem(props: Props) {
                 </View>
             ) : (
                 <Card.Title
-                    title={hasDescription ? invoice.description : `Invoice #${invoice.invoiceNumber ?? '5276'}`}
+                    title={hasDescription ? invoice.description : `Invoice #${invoice.invoiceNumber ?? '0'}`}
                     subtitle={
                         hasDescription
-                            ? `Invoice #${invoice.invoiceNumber ?? '5276'}`
+                            ? `Invoice #${invoice.invoiceNumber ?? '0'}`
                             : `Created on ${new Date(invoice.createdDate).toDateString()}`
                     }
                     left={(props) => <Avatar.Icon {...props} icon="receipt" />}

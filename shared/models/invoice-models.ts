@@ -5,18 +5,25 @@ import UserModel from './user-model';
 export interface InvoiceModel {
     invoiceId: number;
     invoiceNumber: number;
-    description: string;
-    userId: number;
-    user: UserModel;
+    description?: string;
+    userId?: number;
+    user?: UserModel;
     startDate: Date;
     endDate: Date;
     createdDate: Date;
     total: number;
-    lessons: LessonModel[];
+    lessons?: LessonModel[];
 }
 
-export interface InvoicesListPropsModel {
-    invoices: InvoiceModel[];
+export interface CreatedInvoice {
+    invoiceId: number;
+    invoiceNumber: number;
+    invoiceUrl: string;
+    startDate: Date;
+    endDate: Date;
+    createdDate: Date;
+    total: number;
+    description?: string;
 }
 
 export interface NewInvoiceDetailsModel {
@@ -24,11 +31,4 @@ export interface NewInvoiceDetailsModel {
     startDate: Date;
     endDate: Date;
     studentIds: number[];
-}
-
-export interface CreateInvoiceModalPropsModel {
-    visible: boolean;
-    setVisible: (value: boolean) => void;
-    myStudents: StudentModel[];
-    newInvoiceCallback: (invoice: InvoiceModel) => void;
 }

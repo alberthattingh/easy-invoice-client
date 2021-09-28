@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import StatusBarBackground from '../../shared/components/status-bar-background';
 import RecentInvoices from './recent-invoices-list';
 import { getRecentInvoices } from '../../services/invoice.service';
-import { InvoiceModel } from '../../shared/models/invoice-models';
+import { CreatedInvoice, InvoiceModel } from '../../shared/models/invoice-models';
 import NewInvoiceModal from '../popups/new-invoice-modal';
 import { IconButton } from 'react-native-paper';
 
@@ -27,7 +27,17 @@ export default function Invoicing() {
             .catch((error) => console.log(error));
     }, []);
 
-    const addNewInvoiceToState = (invoice: InvoiceModel) => {
+    const addNewInvoiceToState = (newInvoice: CreatedInvoice) => {
+        const invoice: InvoiceModel = {
+            createdDate: newInvoice.createdDate,
+            invoiceId: newInvoice.invoiceId,
+            invoiceNumber: newInvoice.invoiceNumber,
+            description: newInvoice.description,
+            endDate: newInvoice.endDate,
+            startDate: newInvoice.startDate,
+            total: newInvoice.total,
+        };
+
         setInvoices([invoice, ...invoices]);
     };
 

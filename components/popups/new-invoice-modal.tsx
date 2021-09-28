@@ -9,20 +9,23 @@ import {
     StyleSheet,
     View,
 } from 'react-native';
-import { CreateInvoiceModalPropsModel } from '../../shared/models/invoice-models';
 import MultiSelectionBox from '../../shared/components/multi-selection-box';
 import { SelectableItem } from '../../shared/models/selectable-item';
 import CustomDatePicker from '../../shared/components/custom-date-picker';
 import { Snackbar, TextInput } from 'react-native-paper';
-import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
-import { Asset } from 'expo-asset';
-import { createNewInvoice } from '../../services/invoice.service';
+import { createNewInvoice, downloadInvoice } from '../../services/invoice.service';
 import StudentModel from '../../shared/models/student-model';
-import HandlebarsService from '../../services/handlebars.service';
-const Handlebars = require('react-native-handlebars');
+import { CreatedInvoice } from '../../shared/models/invoice-models';
 
-export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
+interface Props {
+    visible: boolean;
+    setVisible: (value: boolean) => void;
+    myStudents: StudentModel[];
+    newInvoiceCallback: (invoice: CreatedInvoice) => void;
+}
+
+export default function NewInvoiceModal(props: Props) {
     const { visible, setVisible, myStudents, newInvoiceCallback } = props;
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -40,19 +43,6 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
         value: student,
     }));
 
-    const createPdf = async (html: string, fileName: string) => {
-        const options: Print.FilePrintOptions = {
-            html,
-        };
-
-        try {
-            const { uri } = await Print.printToFileAsync(options);
-            return uri;
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
     const onCancel = () => {
         setVisible(false);
     };
@@ -67,13 +57,6 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
         }
         setLoading(true);
 
-        const asset = Asset.fromModule(require('../../assets/templates/InvoiceTemplate1.html'));
-        await asset.downloadAsync(); // Optional, saves file into cache
-        const file = await fetch(asset.uri);
-
-        HandlebarsService.registerHelpers();
-        const template = Handlebars.compile((await file.text()) as string);
-
         createNewInvoice({
             description,
             startDate,
@@ -85,14 +68,7 @@ export default function NewInvoiceModal(props: CreateInvoiceModalPropsModel) {
             .then((response) => response.data)
             .then((invoice) => {
                 newInvoiceCallback(invoice);
-
-                const studentNames = invoice.lessons.map((lesson) => lesson.student?.firstName);
-                const fileName = `${studentNames
-                    .filter((name, index) => studentNames.indexOf(name) === index)
-                    .join('&')}_${invoice.createdDate.toString()}`;
-
-                const html = template(invoice);
-                return createPdf(html, fileName);
+                return downloadInvoice(invoice.invoiceUrl);
             })
             .then(async (uri) => {
                 if (uri && (await Sharing.isAvailableAsync())) {

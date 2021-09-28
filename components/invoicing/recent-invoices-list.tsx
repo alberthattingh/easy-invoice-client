@@ -1,9 +1,13 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { InvoiceModel } from '../../shared/models/invoice-models';
 import RecentInvoiceListItem from './recent-invoice-list-item';
-import { InvoicesListPropsModel } from '../../shared/models/invoice-models';
 
-export default function RecentInvoicesList(props: InvoicesListPropsModel) {
+interface Props {
+    invoices: InvoiceModel[];
+}
+
+export default function RecentInvoicesList(props: Props) {
     const { invoices } = props;
 
     return (
