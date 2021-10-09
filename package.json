@@ -36,7 +36,8 @@
     "react-native-web": "~0.13.12",
     "rxjs": "^7.3.0",
     "expo-image-picker": "~9.2.0",
-    "expo-file-system": "~9.3.0"
+    "expo-file-system": "~9.3.0",
+    "expo-updates": "~0.4.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

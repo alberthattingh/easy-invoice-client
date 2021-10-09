@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import AgendaItem from './agenda-item';

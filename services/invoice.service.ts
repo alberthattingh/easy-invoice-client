@@ -3,8 +3,9 @@ import { getToken } from './login.service';
 import { CreatedInvoice, InvoiceModel, NewInvoiceDetailsModel } from '../shared/models/invoice-models';
 import SkipTake from '../shared/models/skip-take';
 import * as FileSystem from 'expo-file-system';
+import ENV from '../shared/environment';
 
-const BASE_URL = 'https://easy-invoice-api.herokuapp.com/Invoice';
+const BASE_URL = `${ENV.apiUrl}/Invoice`;
 
 export async function getAllInvoices(): Promise<AxiosResponse<InvoiceModel[]>> {
     const token = await getToken();
@@ -40,7 +41,7 @@ export async function createNewInvoice(newInvoice: NewInvoiceDetailsModel): Prom
 }
 
 export async function downloadInvoice(url: string): Promise<string> {
-    var filename = url.split('/').pop();
+    const filename = url.split('/').pop();
     const { uri: localUri } = await FileSystem.downloadAsync(url, `${FileSystem.documentDirectory}${filename}.pdf`);
     return localUri;
 }

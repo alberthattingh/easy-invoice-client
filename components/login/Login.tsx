@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useContext, useState } from 'react';
 import { Text, View, StyleSheet, Linking, ActivityIndicator, Keyboard } from 'react-native';
 import { AppScreens } from '../../shared/constants/app-screens.enum';

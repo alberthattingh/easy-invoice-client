@@ -1,8 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import ENV from '../shared/environment';
 import LessonModel from '../shared/models/lesson-model';
 import { getToken } from './login.service';
 
-const BASE_URL = 'https://easy-invoice-api.herokuapp.com/Lessons';
+const BASE_URL = `${ENV.apiUrl}/Lessons`;
 
 export async function getLessons(): Promise<AxiosResponse<LessonModel[]>> {
     const token = await getToken();

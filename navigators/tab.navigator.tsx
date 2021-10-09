@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../components/home/home';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Students from '../components/students/students';
 import { StudentsProvider } from '../components/provider/students-provider';
 import Invoicing from '../components/invoicing/invoicing';
