@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "EasyInvoice",
+    "name": "E-Voice",
     "slug": "EasyInvoice",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/Icon.png",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/images/Splash.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -29,7 +29,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/Icon.png"
     },
     "privacy": "hidden",
     "description": "",
