@@ -20,7 +20,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "This app allows you to upload a logo to be displayed on your generated invoices. Photo library access is required for this reason."
-      }
+      },
+      "bundleIdentifier": "com.albertthedev.evoice"
     },
     "android": {
       "adaptiveIcon": {
