@@ -20,7 +20,7 @@ export default function ImageSelector(props: Props) {
 
     const [image, setImage] = useState<string>('');
     const [permissionStatus, setPermissionStatus] = useState<LibraryPermissionStatus>(
-        LibraryPermissionStatus.NotSpecified
+        LibraryPermissionStatus.NotSpecified,
     );
 
     const pickImage = async () => {

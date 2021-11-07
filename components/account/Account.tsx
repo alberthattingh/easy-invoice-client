@@ -1,22 +1,23 @@
 import { KeyboardAvoidingView, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StatusBarBackground from '../../shared/components/status-bar-background';
 import ImageSelector from '../../shared/components/image-selector';
 import { Button, Snackbar, TextInput } from 'react-native-paper';
 import UserContext from '../provider/user-provider';
 import UserModel from '../../shared/models/user-model';
-import { updateUserDetails, updateUserLogo } from '../../services/account.service';
+import { getUserLogo, updateUserDetails, updateUserLogo } from '../../services/account.service';
 import { LibraryPermissionStatus } from '../../shared/constants/library-permission-status.enum';
 import { LogoData } from '../../shared/models/logo-data';
+import * as FileSystem from 'expo-file-system';
 
-function Account() {
+function Account(): JSX.Element {
     const { user, setUser } = useContext(UserContext);
     const activeBankAccount = user?.bankingDetails?.find((acc) => acc.isActive);
 
     const [name, setName] = useState<string>(user?.firstName as string);
     const [surname, setSurname] = useState<string>(user?.lastName as string);
     const [email, setEmail] = useState<string>(user?.email as string);
-    const [password, setPassword] = useState<string>('');
+    // const [password, setPassword] = useState<string>('');
 
     const [accountHolder, setAccountHolder] = useState<string>(activeBankAccount?.accountHolder as string);
     const [accountType, setAccountType] = useState<string>(activeBankAccount?.accountType as string);
@@ -27,11 +28,11 @@ function Account() {
 
     const [logo, setLogo] = useState<string>('');
     const [permissionStatus, setPermissionStatus] = useState<LibraryPermissionStatus>(
-        LibraryPermissionStatus.NotSpecified
+        LibraryPermissionStatus.NotSpecified,
     );
     const [showPermissionSnack, setShowPermissionSnack] = useState<boolean>(false);
 
-    const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
+    // const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
     const [snackMessage, setSnackMessage] = useState<string>('');
@@ -44,9 +45,36 @@ function Account() {
         await Linking.openURL('app-settings:');
     };
 
-    const updateLogo = (imageRef: string) => {
-        console.log('Uploading', imageRef);
+    useEffect(() => {
+        displayCurrentLogo()
+            .then((uri) => {
+                if (uri && !logo) {
+                    setLogo(uri);
+                }
+            })
+            .catch(() => {
+                setSnackMessage('Could not retrieve your logo. An error occurred.');
+                setShowSnackBar(true);
+            });
+    }, []);
 
+    const displayCurrentLogo = async () => {
+        if (user?.logoUrl && user.logoName) {
+            let logoUri: string;
+            const fileInfo = await FileSystem.getInfoAsync(`${FileSystem.documentDirectory}/${user.logoName}`);
+
+            if (fileInfo.exists) {
+                logoUri = fileInfo.uri;
+            } else {
+                logoUri = (await getUserLogo(user.logoUrl, user.logoName)).uri;
+            }
+
+            return logoUri;
+        }
+        return null;
+    };
+
+    const updateLogo = (imageRef: string) => {
         setLogo(imageRef);
 
         const filename = imageRef.split('/').pop();
@@ -62,12 +90,10 @@ function Account() {
         updateUserLogo(logoFile)
             .then((response) => response.data)
             .then((updatedUser) => {
+                setUser(updatedUser);
                 setIsLoading(false);
-                console.log('Uploaded');
             })
-            .catch((error) => {
-                console.log(error);
-
+            .catch(() => {
                 setIsLoading(false);
                 setSnackMessage('Could not update your logo. An error occurred.');
                 setShowSnackBar(true);
@@ -122,7 +148,7 @@ function Account() {
                 updatedUser.token = user?.token;
                 setUser(updatedUser);
             })
-            .catch((error) => {
+            .catch(() => {
                 setIsLoading(false);
                 setSnackMessage('Could not update user details. An error occurred.');
                 setShowSnackBar(true);
@@ -226,6 +252,17 @@ function Account() {
                             />
                         </View>
                     </View>
+                    <View style={styles.action}>
+                        <Button
+                            style={styles.saveButton}
+                            mode="contained"
+                            onPress={() => save()}
+                            disabled={isLoading}
+                            loading={isLoading}
+                        >
+                            Save
+                        </Button>
+                    </View>
                     <View style={styles.section}>
                         <Text style={styles.heading}>Custom logo</Text>
                         <ImageSelector
@@ -240,17 +277,6 @@ function Account() {
                                 updateLogo(imageRef);
                             }}
                         />
-                    </View>
-                    <View style={styles.action}>
-                        <Button
-                            style={styles.saveButton}
-                            mode="contained"
-                            onPress={() => save()}
-                            disabled={isLoading}
-                            loading={isLoading}
-                        >
-                            Save
-                        </Button>
                     </View>
                 </ScrollView>
                 <Snackbar
@@ -305,7 +331,7 @@ const styles = StyleSheet.create({
     action: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginTop: 20,
+        marginTop: 10,
     },
     saveButton: {
         borderRadius: 25,

@@ -8,7 +8,7 @@ import {
     Text,
     View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import StatusBarBackground from '../../shared/components/status-bar-background';
 import { IconButton, Button, TextInput, Snackbar } from 'react-native-paper';
 import { AppScreens } from '../../shared/constants/app-screens.enum';
@@ -16,6 +16,7 @@ import { signUp } from '../../services/account.service';
 import { login, setToken } from '../../services/login.service';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainStackParamList } from '../../navigators/main-stack.navigator';
+import UserContext from '../provider/user-provider';
 
 type SignUpScreenNavProps = StackNavigationProp<MainStackParamList, AppScreens.SignUp>;
 
@@ -25,6 +26,8 @@ interface Props {
 
 function SignUp(props: Props) {
     const { navigation } = props;
+    const { setUser } = useContext(UserContext);
+
     const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
@@ -54,7 +57,10 @@ function SignUp(props: Props) {
             .then((response) => response.data)
             .then(() => login(email, password))
             .then((response) => response.data)
-            .then((user) => setToken(user.token as string))
+            .then((user) => {
+                setToken(user.token as string);
+                setUser(user);
+            })
             .then(() => navigation.navigate(AppScreens.Home))
             .catch((error) => {
                 setSnackMessage('An error occurred. Could not create account.');

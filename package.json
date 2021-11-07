@@ -3,6 +3,8 @@
   "scripts": {
     "prestart": "npx prettier --check .",
     "start": "expo start",
+    "deploy:staging": "expo build:ios --release-channel staging",
+    "deploy:prod": "expo build:ios --release-channel production",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",

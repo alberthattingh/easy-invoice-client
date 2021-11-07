@@ -2,7 +2,9 @@ import UserModel from '../shared/models/user-model';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getToken } from './login.service';
 import ENV from '../shared/environment';
+import * as FileSystem from 'expo-file-system';
 import { LogoData } from '../shared/models/logo-data';
+import { FileSystemDownloadResult } from 'expo-file-system';
 
 const BASE_URL = `${ENV.apiUrl}/Users`;
 
@@ -36,13 +38,6 @@ export async function updateUserLogo(logoData: LogoData): Promise<AxiosResponse<
     return axios.post<UserModel>(`${BASE_URL}/Logo`, formData, config);
 }
 
-// export async function getUserLogo(): Promise<AxiosResponse<x>> {
-//     const token = await getToken();
-//     const config: AxiosRequestConfig = {
-//         headers: {
-//             Authorization: 'Bearer ' + token,
-//         },
-//     };
-
-//     return axios.get<x>(`${BASE_URL}/Logo`, config);
-// }
+export function getUserLogo(logoUrl: string, logoName: string): Promise<FileSystemDownloadResult> {
+    return FileSystem.downloadAsync(logoUrl, `${FileSystem.documentDirectory}/${logoName}`);
+}
