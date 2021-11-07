@@ -2,7 +2,7 @@ import * as Updates from 'expo-updates';
 
 const productionUrl = 'https://easy-invoice-prod.herokuapp.com';
 const stagingUrl = 'https://easy-invoice-api.herokuapp.com';
-const localUrl = 'http://localhost:3000';
+const localUrl = 'http://localhost:5000';
 
 interface Environment {
     apiUrl: string;

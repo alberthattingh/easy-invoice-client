@@ -5,8 +5,9 @@ import ImageSelector from '../../shared/components/image-selector';
 import { Button, Snackbar, TextInput } from 'react-native-paper';
 import UserContext from '../provider/user-provider';
 import UserModel from '../../shared/models/user-model';
-import { updateUserDetails } from '../../services/account.service';
+import { updateUserDetails, updateUserLogo } from '../../services/account.service';
 import { LibraryPermissionStatus } from '../../shared/constants/library-permission-status.enum';
+import { LogoData } from '../../shared/models/logo-data';
 
 function Account() {
     const { user, setUser } = useContext(UserContext);
@@ -43,6 +44,36 @@ function Account() {
         await Linking.openURL('app-settings:');
     };
 
+    const updateLogo = (imageRef: string) => {
+        console.log('Uploading', imageRef);
+
+        setLogo(imageRef);
+
+        const filename = imageRef.split('/').pop();
+        const match = /\.(\w+)$/.exec(filename as string); // Infer the type of the image
+        const type = match ? `image/${match[1]}` : `image`;
+
+        const logoFile: LogoData = {
+            uri: imageRef,
+            type,
+            name: filename as string,
+        };
+
+        updateUserLogo(logoFile)
+            .then((response) => response.data)
+            .then((updatedUser) => {
+                setIsLoading(false);
+                console.log('Uploaded');
+            })
+            .catch((error) => {
+                console.log(error);
+
+                setIsLoading(false);
+                setSnackMessage('Could not update your logo. An error occurred.');
+                setShowSnackBar(true);
+            });
+    };
+
     const save = () => {
         if (!name) {
             setSnackMessage('First name is required');
@@ -69,7 +100,6 @@ function Account() {
             email,
             defaultFee: user?.defaultFee,
             cell: user?.cell,
-            logo: user?.logo,
         };
 
         if (!bankingDetailsUnchanged())
@@ -207,7 +237,7 @@ function Account() {
                             showSnackBar={showSnackBar}
                             snackMessage={snackMessage}
                             onPressCallback={(imageRef) => {
-                                setLogo(imageRef);
+                                updateLogo(imageRef);
                             }}
                         />
                     </View>

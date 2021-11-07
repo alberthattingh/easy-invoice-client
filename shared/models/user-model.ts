@@ -7,7 +7,8 @@ export default interface UserModel {
     email: string;
     cell?: string;
     defaultFee?: number;
-    logo?: string;
+    logoUrl?: string;
+    logoName?: string;
     userPassword?: string;
     bankingDetails?: BankingDetails[];
     accountDetails?: BankingDetails[];
